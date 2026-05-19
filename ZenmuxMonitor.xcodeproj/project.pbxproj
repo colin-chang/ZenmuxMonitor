@@ -1,0 +1,384 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		08B2B01EAD9BDC34E8D56C97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99BD5EF48307DB06761FF456 /* Assets.xcassets */; };
+		11B824981C0A3EB805A38AF2 /* UsagePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D649126DF7898EDBFAC6C74 /* UsagePanel.swift */; };
+		38DB31FDA409748A1C2B01D1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5D102C1401E90F394C0C8B /* SettingsView.swift */; };
+		640EB9EB0D86E0C31C0A12F6 /* ZenmuxAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0A329BCDA9BE18A258122C /* ZenmuxAPIClient.swift */; };
+		6C8FD87C7E4061524FB26096 /* UsageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8665D15B063087ADB5C4EF3C /* UsageViewModel.swift */; };
+		75C7AC1808D1A53DE86D703C /* FlowRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A45E19F7856EF425EF8E78 /* FlowRate.swift */; };
+		7941CD34DDD758DD138164FE /* ZenmuxMonitorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958A21DA6AFA22CC53B5D57C /* ZenmuxMonitorApp.swift */; };
+		8C4ADC712A54079C44D1B6DA /* SubscriptionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FDF6384FC5E54AFCC7AE53B /* SubscriptionDetail.swift */; };
+		A2D72D9A243BEED1FFBFAA8D /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC118AB3A393162C7366F3C0 /* KeychainManager.swift */; };
+		ACBAF9686888101D231BAAD5 /* PAYGBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F417E10D08C6A1E24CECB702 /* PAYGBalance.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0D649126DF7898EDBFAC6C74 /* UsagePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsagePanel.swift; sourceTree = "<group>"; };
+		30789173FCBA7A7D0582C505 /* ZenmuxMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZenmuxMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E0A329BCDA9BE18A258122C /* ZenmuxAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZenmuxAPIClient.swift; sourceTree = "<group>"; };
+		6FDF6384FC5E54AFCC7AE53B /* SubscriptionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDetail.swift; sourceTree = "<group>"; };
+		75A45E19F7856EF425EF8E78 /* FlowRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowRate.swift; sourceTree = "<group>"; };
+		8665D15B063087ADB5C4EF3C /* UsageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageViewModel.swift; sourceTree = "<group>"; };
+		87BB78E8E5C3DCBC4BED9528 /* ZenmuxMonitor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZenmuxMonitor.entitlements; sourceTree = "<group>"; };
+		958A21DA6AFA22CC53B5D57C /* ZenmuxMonitorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZenmuxMonitorApp.swift; sourceTree = "<group>"; };
+		99BD5EF48307DB06761FF456 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BB5D102C1401E90F394C0C8B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		F417E10D08C6A1E24CECB702 /* PAYGBalance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PAYGBalance.swift; sourceTree = "<group>"; };
+		FC118AB3A393162C7366F3C0 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		FD34395A672680ED7A2F728B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		395937FECDAFE888FA3D26C0 /* ZenmuxMonitor */ = {
+			isa = PBXGroup;
+			children = (
+				979A41BDA1621582D3DE4C28 /* App */,
+				91F7DE57DA382A4B5640E958 /* Models */,
+				6C60DF9E019727BF19F7BA15 /* Services */,
+				59D0116B88BA8502AA8F19B2 /* ViewModels */,
+				80B83AD81A80845CC5579C0B /* Views */,
+				99BD5EF48307DB06761FF456 /* Assets.xcassets */,
+				FD34395A672680ED7A2F728B /* Info.plist */,
+				87BB78E8E5C3DCBC4BED9528 /* ZenmuxMonitor.entitlements */,
+			);
+			path = ZenmuxMonitor;
+			sourceTree = "<group>";
+		};
+		56184320AB5632BE2D742C84 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				30789173FCBA7A7D0582C505 /* ZenmuxMonitor.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		59D0116B88BA8502AA8F19B2 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				8665D15B063087ADB5C4EF3C /* UsageViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		6C60DF9E019727BF19F7BA15 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				FC118AB3A393162C7366F3C0 /* KeychainManager.swift */,
+				6E0A329BCDA9BE18A258122C /* ZenmuxAPIClient.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		80B83AD81A80845CC5579C0B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BB5D102C1401E90F394C0C8B /* SettingsView.swift */,
+				0D649126DF7898EDBFAC6C74 /* UsagePanel.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		91F7DE57DA382A4B5640E958 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				75A45E19F7856EF425EF8E78 /* FlowRate.swift */,
+				F417E10D08C6A1E24CECB702 /* PAYGBalance.swift */,
+				6FDF6384FC5E54AFCC7AE53B /* SubscriptionDetail.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		979A41BDA1621582D3DE4C28 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				958A21DA6AFA22CC53B5D57C /* ZenmuxMonitorApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		FE71796A531B7B5B939736B0 = {
+			isa = PBXGroup;
+			children = (
+				395937FECDAFE888FA3D26C0 /* ZenmuxMonitor */,
+				56184320AB5632BE2D742C84 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5C1F71630B1801A16C783DB8 /* ZenmuxMonitor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 44FA8B281A908E71877EAA57 /* Build configuration list for PBXNativeTarget "ZenmuxMonitor" */;
+			buildPhases = (
+				6324FA1CBFD412879510AFE1 /* Sources */,
+				682B51666899F92491D58281 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ZenmuxMonitor;
+			packageProductDependencies = (
+			);
+			productName = ZenmuxMonitor;
+			productReference = 30789173FCBA7A7D0582C505 /* ZenmuxMonitor.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08B93C041DD5000D8401C645 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					5C1F71630B1801A16C783DB8 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = A8D88CBA147EC531C606E736 /* Build configuration list for PBXProject "ZenmuxMonitor" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = FE71796A531B7B5B939736B0;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 56184320AB5632BE2D742C84 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5C1F71630B1801A16C783DB8 /* ZenmuxMonitor */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		682B51666899F92491D58281 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08B2B01EAD9BDC34E8D56C97 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6324FA1CBFD412879510AFE1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75C7AC1808D1A53DE86D703C /* FlowRate.swift in Sources */,
+				A2D72D9A243BEED1FFBFAA8D /* KeychainManager.swift in Sources */,
+				ACBAF9686888101D231BAAD5 /* PAYGBalance.swift in Sources */,
+				38DB31FDA409748A1C2B01D1 /* SettingsView.swift in Sources */,
+				8C4ADC712A54079C44D1B6DA /* SubscriptionDetail.swift in Sources */,
+				11B824981C0A3EB805A38AF2 /* UsagePanel.swift in Sources */,
+				6C8FD87C7E4061524FB26096 /* UsageViewModel.swift in Sources */,
+				640EB9EB0D86E0C31C0A12F6 /* ZenmuxAPIClient.swift in Sources */,
+				7941CD34DDD758DD138164FE /* ZenmuxMonitorApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		41D9B119B17E80653CD657FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		79C848E426A17C913F0C5A42 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ZenmuxMonitor/ZenmuxMonitor.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ZenmuxMonitor/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LSUIElement = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zenmux.monitor;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_STRICT_CONCURRENCY = complete;
+			};
+			name = Release;
+		};
+		84F3282CE000CE2113D2F9A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ZenmuxMonitor/ZenmuxMonitor.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ZenmuxMonitor/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LSUIElement = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zenmux.monitor;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+			};
+			name = Debug;
+		};
+		EBA144839F8BB1EF9D8734D6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		44FA8B281A908E71877EAA57 /* Build configuration list for PBXNativeTarget "ZenmuxMonitor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84F3282CE000CE2113D2F9A9 /* Debug */,
+				79C848E426A17C913F0C5A42 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A8D88CBA147EC531C606E736 /* Build configuration list for PBXProject "ZenmuxMonitor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EBA144839F8BB1EF9D8734D6 /* Debug */,
+				41D9B119B17E80653CD657FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08B93C041DD5000D8401C645 /* Project object */;
+}

@@ -1,0 +1,38 @@
+name: ZenmuxMonitor
+options:
+  deploymentTarget:
+    macOS: "14.0"
+  xcodeVersion: "15.0"
+  generateEmptyDirectories: true
+  groupSortPosition: top
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+
+targets:
+  ZenmuxMonitor:
+    type: application
+    platform: macOS
+    sources:
+      - path: ZenmuxMonitor
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.zenmux.monitor
+        INFOPLIST_FILE: ZenmuxMonitor/Info.plist
+        CODE_SIGN_ENTITLEMENTS: ZenmuxMonitor/ZenmuxMonitor.entitlements
+        CODE_SIGN_STYLE: Automatic
+        SWIFT_STRICT_CONCURRENCY: complete
+        GENERATE_INFOPLIST_FILE: NO
+        LSUIElement: YES
+        COMBINE_HIDPI_IMAGES: YES
+      configs:
+        Debug:
+          SWIFT_OPTIMIZATION_LEVEL: "-Onone"
+        Release:
+          SWIFT_COMPILATION_MODE: wholemodule
+    entitlements:
+      path: ZenmuxMonitor/ZenmuxMonitor.entitlements
+      properties:
+        com.apple.security.network.client: true
