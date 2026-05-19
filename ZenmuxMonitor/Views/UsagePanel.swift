@@ -49,7 +49,7 @@ struct UsagePanel: View {
                         .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-                Text("设置")
+                Text(L("header.settings"))
                     .font(.title3.bold())
             } else if let detail = viewModel.subscriptionDetail {
                 HStack(spacing: 4) {
@@ -97,7 +97,7 @@ struct UsagePanel: View {
     @ViewBuilder
     private var content: some View {
         if viewModel.isLoading && viewModel.subscriptionDetail == nil {
-            ProgressView("加载中…")
+            ProgressView(L("loading"))
                 .frame(maxWidth: .infinity)
         } else if let error = viewModel.errorMessage {
             ErrorBanner(message: error) {
@@ -124,9 +124,9 @@ struct UsagePanel: View {
             Image(systemName: "key.fill")
                 .font(.title2)
                 .foregroundStyle(.secondary)
-            Text("未配置 API Key")
+            Text(L("no_api_key"))
                 .font(.body)
-            Button("配置 API Key") {
+            Button(L("configure_api_key")) {
                 viewModel.showSettings = true
             }
             .buttonStyle(.borderedProminent)
@@ -164,37 +164,40 @@ struct InlineSettingsView: View {
     @Bindable var viewModel: UsageViewModel
     @State private var apiKeyInput = ""
     @State private var saveMessage = ""
+    @Bindable private var langManager = LanguageManager.shared
 
-    private let intervals: [(String, TimeInterval)] = [
-        ("1 分钟", 60),
-        ("5 分钟", 300),
-        ("15 分钟", 900),
-        ("30 分钟", 1800),
-    ]
+    private var intervals: [(String, TimeInterval)] {
+        [
+            (L("settings.interval.1min"), 60),
+            (L("settings.interval.5min"), 300),
+            (L("settings.interval.15min"), 900),
+            (L("settings.interval.30min"), 1800),
+        ]
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Text("API Key")
+                Text(L("settings.api_key"))
                     .font(.callout.bold())
                 Spacer()
-                Link("获取",
+                Link(L("settings.api_key.get"),
                      destination: URL(string: "https://zenmux.ai/platform/management")!)
                     .font(.footnote)
             }
 
-            SecureField("Management API Key", text: $apiKeyInput)
+            SecureField(L("settings.api_key.placeholder"), text: $apiKeyInput)
                 .textFieldStyle(.roundedBorder)
                 .font(.callout)
 
             HStack(spacing: 8) {
-                Button("保存") {
+                Button(L("settings.save")) {
                     do {
                         try viewModel.saveAPIKey(apiKeyInput)
-                        saveMessage = "已保存"
+                        saveMessage = L("settings.saved")
                         viewModel.requestRefresh()
                     } catch {
-                        saveMessage = "失败"
+                        saveMessage = L("settings.save_failed")
                     }
                 }
                 .buttonStyle(.borderedProminent)
@@ -202,7 +205,7 @@ struct InlineSettingsView: View {
                 .disabled(apiKeyInput.isEmpty)
 
                 if viewModel.hasAPIKey {
-                    Button("删除", role: .destructive) {
+                    Button(L("settings.delete"), role: .destructive) {
                         viewModel.deleteAPIKey()
                         apiKeyInput = ""
                         saveMessage = ""
@@ -212,13 +215,13 @@ struct InlineSettingsView: View {
                 if !saveMessage.isEmpty {
                     Text(saveMessage)
                         .font(.footnote)
-                        .foregroundStyle(saveMessage == "已保存" ? .green : .red)
+                        .foregroundStyle(saveMessage == L("settings.saved") ? .green : .red)
                 }
             }
 
             Divider()
 
-            Picker("刷新间隔", selection: $viewModel.refreshInterval) {
+            Picker(L("settings.refresh_interval"), selection: $viewModel.refreshInterval) {
                 ForEach(intervals, id: \.1) { label, value in
                     Text(label).tag(value)
                 }
@@ -227,6 +230,15 @@ struct InlineSettingsView: View {
             .onChange(of: viewModel.refreshInterval) { _, newValue in
                 viewModel.startAutoRefresh(interval: newValue)
             }
+
+            Divider()
+
+            Picker(L("settings.language"), selection: $langManager.currentLanguage) {
+                ForEach(LanguageManager.AppLanguage.allCases) { lang in
+                    Text(lang.displayName).tag(lang)
+                }
+            }
+            .font(.callout)
         }
         .onAppear {
             if let key = KeychainManager.load(key: KeychainManager.accountKey) {
@@ -290,9 +302,9 @@ struct QuotaRow: View {
 
             HStack {
                 if let used = window.flowsUsed {
-                    Text("\(formatNumber(used)) / \(formatNumber(window.flowsMax)) Flows")
+                    Text("\(formatNumber(used)) / \(formatNumber(window.flowsMax)) \(L("quota.flows"))")
                 } else {
-                    Text("\(formatNumber(window.flowsMax)) Flows")
+                    Text("\(formatNumber(window.flowsMax)) \(L("quota.flows"))")
                 }
                 Spacer()
                 if let countdown = window.resetCountdown() {
@@ -325,13 +337,13 @@ struct PAYGSection: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("PAYG 余额")
+            Text(L("payg.balance"))
                 .font(.callout)
                 .foregroundStyle(.secondary)
             HStack(spacing: 16) {
-                LabeledContent("总计", value: "$\(String(format: "%.2f", balance.totalCredits))")
-                LabeledContent("充值", value: "$\(String(format: "%.2f", balance.topUpCredits))")
-                LabeledContent("赠送", value: "$\(String(format: "%.2f", balance.bonusCredits))")
+                LabeledContent(L("payg.total"), value: "$\(String(format: "%.2f", balance.totalCredits))")
+                LabeledContent(L("payg.top_up"), value: "$\(String(format: "%.2f", balance.topUpCredits))")
+                LabeledContent(L("payg.bonus"), value: "$\(String(format: "%.2f", balance.bonusCredits))")
             }
             .font(.callout)
         }
@@ -343,11 +355,11 @@ struct FlowRateSection: View {
 
     var body: some View {
         HStack {
-            Text("Flow 汇率")
+            Text(L("flow_rate"))
                 .font(.callout)
                 .foregroundStyle(.secondary)
             Spacer()
-            Text("$\(String(format: "%.5f", rate.effectiveUsdPerFlow)) / Flow")
+            Text("$\(String(format: "%.5f", rate.effectiveUsdPerFlow)) \(L("flow_rate.per_flow"))")
                 .font(.callout)
         }
     }
@@ -366,7 +378,7 @@ struct ErrorBanner: View {
                 .font(.callout)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
-            Button("重试", action: onRetry)
+            Button(L("retry"), action: onRetry)
                 .buttonStyle(.bordered)
                 .controlSize(.regular)
         }
@@ -374,4 +386,3 @@ struct ErrorBanner: View {
         .padding(.vertical, 4)
     }
 }
-

@@ -1,0 +1,59 @@
+/* Menu */
+"menu.refresh" = "刷新";
+"menu.settings" = "设置…";
+"menu.quit" = "退出";
+
+/* Header */
+"header.settings" = "设置";
+
+/* Settings */
+"settings.api_key" = "API Key";
+"settings.api_key.get" = "获取";
+"settings.api_key.placeholder" = "Management API Key";
+"settings.save" = "保存";
+"settings.saved" = "已保存";
+"settings.save_failed" = "失败";
+"settings.delete" = "删除";
+"settings.refresh_interval" = "刷新间隔";
+"settings.language" = "语言";
+"settings.interval.1min" = "1 分钟";
+"settings.interval.5min" = "5 分钟";
+"settings.interval.15min" = "15 分钟";
+"settings.interval.30min" = "30 分钟";
+
+/* Quota */
+"quota.5hour" = "5 小时窗口";
+"quota.7day" = "7 天窗口";
+"quota.flows" = "Flows";
+
+/* Countdown */
+"countdown.hours_minutes" = "%d小时%d分后重置";
+"countdown.minutes" = "%d分后重置";
+"countdown.days_hours_minutes" = "%d天%d小时%d分后重置";
+"countdown.days_hours" = "%d天%d小时后重置";
+
+/* PAYG */
+"payg.balance" = "PAYG 余额";
+"payg.total" = "总计";
+"payg.top_up" = "充值";
+"payg.bonus" = "赠送";
+
+/* Flow Rate */
+"flow_rate" = "Flow 汇率";
+"flow_rate.per_flow" = "/ Flow";
+
+/* Errors */
+"error.missing_key" = "Management API Key 未配置";
+"error.unauthorized" = "API Key 无效或已过期";
+"error.rate_limited" = "请求过于频繁，请稍后重试";
+"error.network" = "网络错误：%@";
+"error.invalid_response" = "服务器返回了无效响应";
+"error.http" = "HTTP 错误 %d";
+"error.decoding" = "数据解析失败：%@";
+"error.api" = "API 返回失败";
+
+/* Misc */
+"loading" = "加载中…";
+"no_api_key" = "未配置 API Key";
+"configure_api_key" = "配置 API Key";
+"retry" = "重试";

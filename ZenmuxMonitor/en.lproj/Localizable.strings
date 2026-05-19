@@ -1,0 +1,59 @@
+/* Menu */
+"menu.refresh" = "Refresh";
+"menu.settings" = "Settings…";
+"menu.quit" = "Quit";
+
+/* Header */
+"header.settings" = "Settings";
+
+/* Settings */
+"settings.api_key" = "API Key";
+"settings.api_key.get" = "Get";
+"settings.api_key.placeholder" = "Management API Key";
+"settings.save" = "Save";
+"settings.saved" = "Saved";
+"settings.save_failed" = "Failed";
+"settings.delete" = "Delete";
+"settings.refresh_interval" = "Refresh Interval";
+"settings.language" = "Language";
+"settings.interval.1min" = "1 min";
+"settings.interval.5min" = "5 min";
+"settings.interval.15min" = "15 min";
+"settings.interval.30min" = "30 min";
+
+/* Quota */
+"quota.5hour" = "5-Hour Window";
+"quota.7day" = "7-Day Window";
+"quota.flows" = "Flows";
+
+/* Countdown */
+"countdown.hours_minutes" = "%dhr %dmin reset";
+"countdown.minutes" = "%dmin reset";
+"countdown.days_hours_minutes" = "%dd %dhr %dmin reset";
+"countdown.days_hours" = "%dd %dhr reset";
+
+/* PAYG */
+"payg.balance" = "PAYG Balance";
+"payg.total" = "Total";
+"payg.top_up" = "Top-up";
+"payg.bonus" = "Bonus";
+
+/* Flow Rate */
+"flow_rate" = "Flow Rate";
+"flow_rate.per_flow" = "/ Flow";
+
+/* Errors */
+"error.missing_key" = "Management API Key not configured";
+"error.unauthorized" = "API Key invalid or expired";
+"error.rate_limited" = "Too many requests, please try again later";
+"error.network" = "Network error: %@";
+"error.invalid_response" = "Server returned an invalid response";
+"error.http" = "HTTP Error %d";
+"error.decoding" = "Data parsing failed: %@";
+"error.api" = "API request failed";
+
+/* Misc */
+"loading" = "Loading…";
+"no_api_key" = "API Key not configured";
+"configure_api_key" = "Configure API Key";
+"retry" = "Retry";

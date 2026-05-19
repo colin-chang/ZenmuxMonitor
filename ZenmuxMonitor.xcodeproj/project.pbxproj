@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		08B2B01EAD9BDC34E8D56C97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99BD5EF48307DB06761FF456 /* Assets.xcassets */; };
 		11B824981C0A3EB805A38AF2 /* UsagePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D649126DF7898EDBFAC6C74 /* UsagePanel.swift */; };
+		1F15AC7CBC8623D4D1C831B2 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A3BC2475647AB41CA05623 /* LanguageManager.swift */; };
 		38DB31FDA409748A1C2B01D1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5D102C1401E90F394C0C8B /* SettingsView.swift */; };
 		640EB9EB0D86E0C31C0A12F6 /* ZenmuxAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0A329BCDA9BE18A258122C /* ZenmuxAPIClient.swift */; };
 		6C8FD87C7E4061524FB26096 /* UsageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8665D15B063087ADB5C4EF3C /* UsageViewModel.swift */; };
@@ -17,10 +18,14 @@
 		8C4ADC712A54079C44D1B6DA /* SubscriptionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FDF6384FC5E54AFCC7AE53B /* SubscriptionDetail.swift */; };
 		A2D72D9A243BEED1FFBFAA8D /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC118AB3A393162C7366F3C0 /* KeychainManager.swift */; };
 		ACBAF9686888101D231BAAD5 /* PAYGBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F417E10D08C6A1E24CECB702 /* PAYGBalance.swift */; };
+		D2A167700D10461A45E46C49 /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 109C95930303CDADFE2EB841 /* en.lproj */; };
+		EDA1F7D87241B8D310C7D559 /* zh-Hans.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 0190A146A571DD755B38C265 /* zh-Hans.lproj */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0190A146A571DD755B38C265 /* zh-Hans.lproj */ = {isa = PBXFileReference; path = "zh-Hans.lproj"; sourceTree = "<group>"; };
 		0D649126DF7898EDBFAC6C74 /* UsagePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsagePanel.swift; sourceTree = "<group>"; };
+		109C95930303CDADFE2EB841 /* en.lproj */ = {isa = PBXFileReference; path = en.lproj; sourceTree = "<group>"; };
 		30789173FCBA7A7D0582C505 /* ZenmuxMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZenmuxMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E0A329BCDA9BE18A258122C /* ZenmuxAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZenmuxAPIClient.swift; sourceTree = "<group>"; };
 		6FDF6384FC5E54AFCC7AE53B /* SubscriptionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDetail.swift; sourceTree = "<group>"; };
@@ -29,6 +34,7 @@
 		87BB78E8E5C3DCBC4BED9528 /* ZenmuxMonitor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZenmuxMonitor.entitlements; sourceTree = "<group>"; };
 		958A21DA6AFA22CC53B5D57C /* ZenmuxMonitorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZenmuxMonitorApp.swift; sourceTree = "<group>"; };
 		99BD5EF48307DB06761FF456 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B7A3BC2475647AB41CA05623 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		BB5D102C1401E90F394C0C8B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F417E10D08C6A1E24CECB702 /* PAYGBalance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PAYGBalance.swift; sourceTree = "<group>"; };
 		FC118AB3A393162C7366F3C0 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
@@ -45,8 +51,10 @@
 				59D0116B88BA8502AA8F19B2 /* ViewModels */,
 				80B83AD81A80845CC5579C0B /* Views */,
 				99BD5EF48307DB06761FF456 /* Assets.xcassets */,
+				109C95930303CDADFE2EB841 /* en.lproj */,
 				FD34395A672680ED7A2F728B /* Info.plist */,
 				87BB78E8E5C3DCBC4BED9528 /* ZenmuxMonitor.entitlements */,
+				0190A146A571DD755B38C265 /* zh-Hans.lproj */,
 			);
 			path = ZenmuxMonitor;
 			sourceTree = "<group>";
@@ -71,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				FC118AB3A393162C7366F3C0 /* KeychainManager.swift */,
+				B7A3BC2475647AB41CA05623 /* LanguageManager.swift */,
 				6E0A329BCDA9BE18A258122C /* ZenmuxAPIClient.swift */,
 			);
 			path = Services;
@@ -171,6 +180,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				08B2B01EAD9BDC34E8D56C97 /* Assets.xcassets in Resources */,
+				D2A167700D10461A45E46C49 /* en.lproj in Resources */,
+				EDA1F7D87241B8D310C7D559 /* zh-Hans.lproj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,6 +194,7 @@
 			files = (
 				75C7AC1808D1A53DE86D703C /* FlowRate.swift in Sources */,
 				A2D72D9A243BEED1FFBFAA8D /* KeychainManager.swift in Sources */,
+				1F15AC7CBC8623D4D1C831B2 /* LanguageManager.swift in Sources */,
 				ACBAF9686888101D231BAAD5 /* PAYGBalance.swift in Sources */,
 				38DB31FDA409748A1C2B01D1 /* SettingsView.swift in Sources */,
 				8C4ADC712A54079C44D1B6DA /* SubscriptionDetail.swift in Sources */,

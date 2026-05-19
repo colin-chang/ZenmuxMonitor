@@ -83,21 +83,21 @@ actor ZenmuxAPIClient {
         var errorDescription: String? {
             switch self {
             case .missingKey:
-                "Management API Key 未配置"
+                L("error.missing_key")
             case .unauthorized:
-                "API Key 无效或已过期"
+                L("error.unauthorized")
             case .rateLimited:
-                "请求过于频繁，请稍后重试"
+                L("error.rate_limited")
             case .networkError(let error):
-                "网络错误：\(error.localizedDescription)"
+                String(format: L("error.network"), error.localizedDescription)
             case .invalidResponse:
-                "服务器返回了无效响应"
+                L("error.invalid_response")
             case .httpError(let code):
-                "HTTP 错误 \(code)"
+                String(format: L("error.http"), code)
             case .decodingError(let error):
-                "数据解析失败：\(error.localizedDescription)"
+                String(format: L("error.decoding"), error.localizedDescription)
             case .apiError:
-                "API 返回失败"
+                L("error.api")
             }
         }
     }

@@ -65,11 +65,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func showContextMenu() {
         let menu = NSMenu()
-        let refresh = NSMenuItem(title: "刷新", action: #selector(refreshAction), keyEquivalent: "")
+        let refresh = NSMenuItem(title: L("menu.refresh"), action: #selector(refreshAction), keyEquivalent: "")
         refresh.target = self
-        let settings = NSMenuItem(title: "设置…", action: #selector(settingsAction), keyEquivalent: "")
+        let settings = NSMenuItem(title: L("menu.settings"), action: #selector(settingsAction), keyEquivalent: "")
         settings.target = self
-        let quit = NSMenuItem(title: "退出", action: #selector(quitAction), keyEquivalent: "")
+        let quit = NSMenuItem(title: L("menu.quit"), action: #selector(quitAction), keyEquivalent: "")
         quit.target = self
         menu.addItem(refresh)
         menu.addItem(settings)

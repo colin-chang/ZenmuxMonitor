@@ -1,54 +1,81 @@
 # ZenMux Monitor
 
-macOS 菜单栏应用，实时查看 [ZenMux](https://zenmux.ai) 订阅配额与用量。
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![Platform: macOS](https://img.shields.io/badge/Platform-macOS%2014%2B-black.svg)
+[![Release](https://img.shields.io/github/v/release/colinchang/ZenmuxMonitor?include_prereleases)](../../releases)
 
-## 功能
+English Version | [中文版本](./README_CN.md)
 
-- 菜单栏常驻，显示当前 5 小时配额使用百分比
-- 左键点击图标展开用量面板：5 小时 / 7 天配额进度条、PAYG 余额、Flow 汇率
-- 右键点击图标弹出菜单：刷新、设置、退出
-- 用量颜色预警（绿 / 橙 / 红）
-- API Key 存储于 macOS Keychain
-- 可配置自动刷新间隔（1 / 5 / 15 / 30 分钟）
+A lightweight macOS menu bar app for monitoring [ZenMux](https://zenmux.ai) subscription quotas and usage in real time.
 
-## 系统要求
+![Screenshot](./sample.webp)
 
-- macOS 14.0 (Sonoma) 及以上
-- Xcode 16.0 及以上
+## Features
 
-## 构建与运行
+- Resides in the menu bar, showing the current 5-hour quota usage percentage
+- Left-click the icon to open the usage panel: 5-hour / 7-day quota progress bars, PAYG balance, Flow rate
+- Right-click the icon for a context menu: Refresh, Settings, Quit
+- Color-coded usage warnings (green / orange / red)
+- API Key stored securely in macOS Keychain
+- Configurable auto-refresh interval (1 / 5 / 15 / 30 minutes)
+- English and Simplified Chinese UI, auto-detected from system language
 
-项目使用 [XcodeGen](https://github.com/yonaskolb/XcodeGen) 管理工程文件：
+## Installation
+
+Download the latest DMG from the [Releases](../../releases) page, then drag **ZenMux Monitor** to your Applications folder.
+
+> On first launch, you may need to right-click the app and choose **Open** to bypass Gatekeeper.
+
+## Configure API Key
+
+1. Get your Management API Key from the [ZenMux Management Panel](https://zenmux.ai/platform/management)
+2. Left-click the menu bar icon → click the gear icon → paste your API Key → Save
+
+## Requirements
+
+- macOS 14.0 (Sonoma) or later
+- Xcode 16.0 or later (for development)
+
+## Development
+
+The project uses [XcodeGen](https://github.com/yonaskolb/XcodeGen) to manage the Xcode project file:
 
 ```bash
-# 安装 XcodeGen（如未安装）
+# Install XcodeGen (if not already installed)
 brew install xcodegen
 
-# 生成 .xcodeproj
+# Generate .xcodeproj
 xcodegen generate
 
-# 构建运行
+# Open in Xcode
 open ZenmuxMonitor.xcodeproj
 ```
 
-或直接用命令行：
+Or build from the command line:
 
 ```bash
 xcodebuild -scheme ZenmuxMonitor -configuration Debug build
 ```
 
-## 配置 API Key
-
-1. 在 [ZenMux 管理面板](https://zenmux.ai/platform/management) 获取 Management API Key
-2. 左键点击菜单栏图标 → 点击齿轮图标 → 粘贴 API Key → 保存
-
-## 技术栈
+## Tech Stack
 
 - Swift 6.0 / SwiftUI / AppKit
-- `@Observable` 宏 + `NSStatusItem` + `NSPopover`
-- Security.framework（Keychain）
-- 零第三方依赖
+- `@Observable` macro + `NSStatusItem` + `NSPopover`
+- Security.framework (Keychain)
+- Zero third-party dependencies
 
-## 许可证
+## Contributing
 
-[MIT](LICENSE)
+Contributions are welcome! Please read the [Contributing Guide](./CONTRIBUTING.md) for details.
+
+## Changelog
+
+See [CHANGELOG.md](./CHANGELOG.md) for a list of changes.
+
+## Security
+
+If you discover a security vulnerability, please report it privately. See [SECURITY.md](./SECURITY.md) for details.
+
+## License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.

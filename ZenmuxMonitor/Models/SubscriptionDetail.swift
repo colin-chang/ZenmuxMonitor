@@ -12,7 +12,8 @@ struct SubscriptionDetail: Codable, Sendable {
 
     var quota5HourDisplay: QuotaWindowDisplay {
         QuotaWindowDisplay(
-            label: "5 小时窗口",
+            label: L("quota.5hour"),
+            is5Hour: true,
             usagePercentage: quota5Hour.usagePercentage,
             flowsUsed: quota5Hour.usedFlows,
             flowsMax: quota5Hour.maxFlows,
@@ -22,7 +23,8 @@ struct SubscriptionDetail: Codable, Sendable {
 
     var quota7DayDisplay: QuotaWindowDisplay {
         QuotaWindowDisplay(
-            label: "7 天窗口",
+            label: L("quota.7day"),
+            is5Hour: false,
             usagePercentage: quota7Day.usagePercentage,
             flowsUsed: quota7Day.usedFlows,
             flowsMax: quota7Day.maxFlows,
@@ -80,6 +82,7 @@ struct SubscriptionDetail: Codable, Sendable {
     struct QuotaWindowDisplay: Identifiable {
         let id = UUID()
         let label: String
+        let is5Hour: Bool
         let usagePercentage: Double?
         let flowsUsed: Double?
         let flowsMax: Double
@@ -99,21 +102,21 @@ struct SubscriptionDetail: Codable, Sendable {
             let hours = Int(interval) / 3600
             let minutes = Int(interval) % 3600 / 60
 
-            if label.contains("5") {
+            if is5Hour {
                 if hours > 0 {
-                    return "\(hours)小时\(minutes)分后重置"
+                    return String(format: L("countdown.hours_minutes"), hours, minutes)
                 }
-                return "\(minutes)分后重置"
+                return String(format: L("countdown.minutes"), minutes)
             } else {
                 let days = hours / 24
                 let remainHours = hours % 24
                 if days > 0 {
-                    return "\(days)天\(remainHours)小时\(minutes)分后重置"
+                    return String(format: L("countdown.days_hours_minutes"), days, remainHours, minutes)
                 }
                 if remainHours > 0 {
-                    return "\(remainHours)小时\(minutes)分后重置"
+                    return String(format: L("countdown.hours_minutes"), remainHours, minutes)
                 }
-                return "\(minutes)分后重置"
+                return String(format: L("countdown.minutes"), minutes)
             }
         }
     }
