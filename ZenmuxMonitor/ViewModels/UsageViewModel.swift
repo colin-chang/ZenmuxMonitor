@@ -10,6 +10,7 @@ final class UsageViewModel: @unchecked Sendable {
     var isLoading = false
     var lastUpdated: Date?
     var errorMessage: String?
+    var showSettings = false
 
     private let client = ZenmuxAPIClient()
     private var refreshTimer: Timer?

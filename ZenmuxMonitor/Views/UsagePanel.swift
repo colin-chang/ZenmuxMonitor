@@ -2,14 +2,13 @@ import SwiftUI
 
 struct UsagePanel: View {
     @Bindable var viewModel: UsageViewModel
-    @State private var showingSettings = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             header
             Divider()
-            if showingSettings {
-                InlineSettingsView(viewModel: viewModel, isPresented: $showingSettings)
+            if viewModel.showSettings {
+                InlineSettingsView(viewModel: viewModel)
             } else if viewModel.hasAPIKey {
                 content
             } else {
@@ -20,12 +19,6 @@ struct UsagePanel: View {
         }
         .padding()
         .frame(width: 340)
-        .contextMenu {
-            Button("刷新") { viewModel.requestRefresh() }
-            Button("设置…") { showingSettings = true }
-            Divider()
-            Button("退出") { NSApp.terminate(nil) }
-        }
         .onAppear {
             if viewModel.hasAPIKey {
                 viewModel.onPanelAppear()
@@ -35,7 +28,7 @@ struct UsagePanel: View {
             viewModel.onPanelDisappear()
         }
         .onChange(of: viewModel.hasAPIKey) { _, hasKey in
-            if hasKey && !showingSettings {
+            if hasKey && !viewModel.showSettings {
                 viewModel.startAutoRefresh()
                 viewModel.requestRefresh()
             }
@@ -46,9 +39,9 @@ struct UsagePanel: View {
 
     private var header: some View {
         HStack {
-            if showingSettings {
+            if viewModel.showSettings {
                 Button {
-                    showingSettings = false
+                    viewModel.showSettings = false
                 } label: {
                     Image(systemName: "chevron.left")
                         .font(.body)
@@ -71,9 +64,9 @@ struct UsagePanel: View {
                     .font(.title3.bold())
             }
             Spacer()
-            if !showingSettings {
+            if !viewModel.showSettings {
                 Button {
-                    showingSettings = true
+                    viewModel.showSettings = true
                 } label: {
                     Image(systemName: "gearshape")
                         .font(.body)
@@ -134,7 +127,7 @@ struct UsagePanel: View {
             Text("未配置 API Key")
                 .font(.body)
             Button("配置 API Key") {
-                showingSettings = true
+                viewModel.showSettings = true
             }
             .buttonStyle(.borderedProminent)
             .controlSize(.regular)
@@ -147,7 +140,7 @@ struct UsagePanel: View {
 
     private var footer: some View {
         HStack {
-            if !showingSettings {
+            if !viewModel.showSettings {
                 Button {
                     viewModel.requestRefresh()
                 } label: {
@@ -158,7 +151,7 @@ struct UsagePanel: View {
                 .disabled(viewModel.isLoading)
             }
             Spacer()
-            if !showingSettings, let detail = viewModel.subscriptionDetail {
+            if !viewModel.showSettings, let detail = viewModel.subscriptionDetail {
                 StatusBadge(status: detail.accountStatus)
             }
         }
@@ -169,7 +162,6 @@ struct UsagePanel: View {
 
 struct InlineSettingsView: View {
     @Bindable var viewModel: UsageViewModel
-    @Binding var isPresented: Bool
     @State private var apiKeyInput = ""
     @State private var saveMessage = ""
 
@@ -382,3 +374,4 @@ struct ErrorBanner: View {
         .padding(.vertical, 4)
     }
 }
+
