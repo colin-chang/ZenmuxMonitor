@@ -269,6 +269,24 @@ struct StatusBadge: View {
     }
 }
 
+struct ProgressBar: View {
+    let value: Double
+    let color: Color
+
+    private var clamped: Double { max(0, min(1, value)) }
+
+    var body: some View {
+        GeometryReader { geo in
+            ZStack(alignment: .leading) {
+                Capsule().fill(.quaternary)
+                Capsule().fill(color)
+                    .frame(width: geo.size.width * CGFloat(clamped))
+            }
+        }
+        .frame(height: 4)
+    }
+}
+
 struct QuotaRow: View {
     let window: SubscriptionDetail.QuotaWindowDisplay
 
@@ -295,9 +313,7 @@ struct QuotaRow: View {
             }
 
             if let pct = window.usagePercentage {
-                ProgressView(value: pct)
-                    .progressViewStyle(.linear)
-                    .tint(progressColor)
+                ProgressBar(value: pct, color: progressColor)
             }
 
             HStack {

@@ -42,6 +42,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         popover.contentViewController = NSHostingController(
             rootView: UsagePanel(viewModel: viewModel)
         )
+        applyPopoverAppearance()
+    }
+
+    /// Setting an explicit appearance disables NSPopover vibrancy,
+    /// which causes colored text to render with a halo in light mode.
+    private func applyPopoverAppearance() {
+        let isDark = NSApp.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
+        popover.appearance = NSAppearance(named: isDark ? .darkAqua : .aqua)
     }
 
     @objc private func handleClick(_ sender: NSStatusBarButton) {
@@ -57,6 +65,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if popover.isShown {
             popover.performClose(nil)
         } else {
+            applyPopoverAppearance()
             NSApp.activate(ignoringOtherApps: true)
             popover.show(relativeTo: sender.bounds, of: sender, preferredEdge: .minY)
             if viewModel.hasAPIKey { viewModel.requestRefresh() }
