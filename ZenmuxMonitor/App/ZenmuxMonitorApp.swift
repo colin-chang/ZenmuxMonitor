@@ -5,6 +5,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     let viewModel = UsageViewModel()
     private var statusItem: NSStatusItem!
     private var popover: NSPopover!
+    private var appearanceObservation: NSKeyValueObservation?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
@@ -21,19 +22,43 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         button.sendAction(on: [.leftMouseUp, .rightMouseUp])
         button.target = self
         observeLabel()
+        appearanceObservation = NSApp.observe(\.effectiveAppearance, options: [.new]) { [weak self] _, _ in
+            Task { @MainActor in self?.applyStatusBarStyle() }
+        }
     }
 
     // Re-registers on every @Observable change to keep the title in sync.
     private func observeLabel() {
         withObservationTracking {
-            if let pct = viewModel.subscriptionDetail?.quota5HourDisplay.usagePercentage {
-                statusItem.button?.title = String(format: "%.0f%%", pct * 100)
-            } else {
-                statusItem.button?.title = ""
-            }
+            _ = viewModel.subscriptionDetail?.quota5HourDisplay.usagePercentage
         } onChange: {
             Task { @MainActor in self.observeLabel() }
         }
+        applyStatusBarStyle()
+    }
+
+    private func applyStatusBarStyle() {
+        guard let button = statusItem.button else { return }
+        if let pct = viewModel.subscriptionDetail?.quota5HourDisplay.usagePercentage {
+            let color = quotaTintColor(pct: pct)
+            let font = button.font ?? NSFont.systemFont(ofSize: NSFont.systemFontSize)
+            button.attributedTitle = NSAttributedString(
+                string: String(format: "%.0f%%", pct * 100),
+                attributes: [.foregroundColor: color, .font: font]
+            )
+        } else {
+            button.attributedTitle = NSAttributedString(string: "")
+        }
+    }
+
+    private func quotaTintColor(pct: Double) -> NSColor {
+        let display = SubscriptionDetail.QuotaWindowDisplay(
+            label: "", is5Hour: true, usagePercentage: pct,
+            flowsUsed: nil, flowsMax: 0, resetsAt: nil
+        )
+        if display.isHighUsage { return .systemRed }
+        if display.isWarning { return .systemOrange }
+        return .systemGreen
     }
 
     private func setupPopover() {
