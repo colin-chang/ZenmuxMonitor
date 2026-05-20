@@ -8,7 +8,6 @@
 
 轻量级 macOS 菜单栏应用，实时查看 [ZenMux](https://zenmux.ai) 订阅配额与用量。
 
-
 ![示例图片](./sample.webp)
 
 ## 功能
@@ -25,7 +24,13 @@
 
 从 [Releases](../../releases) 页面下载最新 DMG，将 **ZenMux Monitor** 拖入应用程序文件夹即可。
 
-> 首次启动可能需要右键点击应用并选择「打开」以绕过 Gatekeeper。
+> 由于应用未经 Apple 开发者证书签名，macOS 可能会提示「"ZenMux Monitor"已损坏，无法打开」。请在终端执行以下命令解除隔离属性：
+>
+> ```bash
+> sudo xattr -rd com.apple.quarantine "/Applications/ZenmuxMonitor.app"
+> ```
+>
+> 执行后即可正常打开应用。
 
 ## 配置 API Key
 

@@ -24,7 +24,13 @@ A lightweight macOS menu bar app for monitoring [ZenMux](https://zenmux.ai) subs
 
 Download the latest DMG from the [Releases](../../releases) page, then drag **ZenMux Monitor** to your Applications folder.
 
-> On first launch, you may need to right-click the app and choose **Open** to bypass Gatekeeper.
+> Since the app is not signed with an Apple Developer certificate, macOS may show a warning that the app is "damaged" and cannot be opened. To fix this, run the following command in Terminal:
+>
+> ```bash
+> sudo xattr -rd com.apple.quarantine "/Applications/ZenmuxMonitor.app"
+> ```
+>
+> After that, you can open the app normally.
 
 ## Configure API Key
 
