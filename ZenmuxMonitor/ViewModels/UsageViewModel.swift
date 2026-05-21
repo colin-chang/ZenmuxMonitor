@@ -30,23 +30,30 @@ final class UsageViewModel: @unchecked Sendable {
         return !key.isEmpty
     }
 
-    var preventSleep = UserDefaults.standard.bool(forKey: "preventSleep") {
-        didSet {
-            UserDefaults.standard.set(preventSleep, forKey: Self.preventSleepKey)
-            if preventSleep { startSleepPrevention() } else { stopSleepPrevention() }
+    private var _preventSleep = UserDefaults.standard.bool(forKey: "preventSleep")
+    private var _launchAtLogin = SMAppService.mainApp.status == .enabled
+
+    var preventSleep: Bool {
+        get { _preventSleep }
+        set {
+            _preventSleep = newValue
+            UserDefaults.standard.set(newValue, forKey: Self.preventSleepKey)
+            if newValue { startSleepPrevention() } else { stopSleepPrevention() }
         }
     }
 
-    var launchAtLogin = SMAppService.mainApp.status == .enabled {
-        didSet {
+    var launchAtLogin: Bool {
+        get { _launchAtLogin }
+        set {
+            _launchAtLogin = newValue
             do {
-                if launchAtLogin {
+                if newValue {
                     try SMAppService.mainApp.register()
                 } else {
                     try SMAppService.mainApp.unregister()
                 }
             } catch {
-                launchAtLogin = oldValue
+                _launchAtLogin = !newValue
                 errorMessage = error.localizedDescription
             }
         }
