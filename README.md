@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![Platform: macOS](https://img.shields.io/badge/Platform-macOS%2014%2B-black.svg)
-[![Release](https://img.shields.io/github/v/release/colinchang/ZenmuxMonitor?include_prereleases)](../../releases)
+[![Release](https://img.shields.io/github/v/release/colin-chang/ZenmuxMonitor?include_prereleases)](../../releases)
 
 English Version | [中文版本](./README_CN.md)
 
