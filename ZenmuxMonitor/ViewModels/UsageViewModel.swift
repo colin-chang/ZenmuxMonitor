@@ -21,8 +21,14 @@ final class UsageViewModel: @unchecked Sendable {
     private static let refreshIntervalKey = "refreshInterval"
     private static let preventSleepKey = "preventSleep"
 
+    private var _refreshInterval: TimeInterval = 300
+
     var refreshInterval: TimeInterval {
-        didSet { UserDefaults.standard.set(refreshInterval, forKey: Self.refreshIntervalKey) }
+        get { _refreshInterval }
+        set {
+            _refreshInterval = newValue
+            UserDefaults.standard.set(newValue, forKey: Self.refreshIntervalKey)
+        }
     }
 
     var hasAPIKey: Bool {
@@ -60,8 +66,8 @@ final class UsageViewModel: @unchecked Sendable {
     }
 
     init() {
-        self.refreshInterval = UserDefaults.standard.double(forKey: Self.refreshIntervalKey)
-        if self.refreshInterval == 0 { self.refreshInterval = 300 }
+        let stored = UserDefaults.standard.double(forKey: Self.refreshIntervalKey)
+        _refreshInterval = stored > 0 ? stored : 300
         if preventSleep {
             startSleepPrevention()
         }

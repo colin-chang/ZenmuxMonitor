@@ -282,7 +282,7 @@ struct InlineSettingsView: View {
                 Text(L("settings.refresh_interval"))
                     .font(.callout)
                 Spacer()
-                Picker(L("settings.refresh_interval"), selection: $viewModel.refreshInterval) {
+                Picker(L("settings.refresh_interval"), selection: Binding(get: { viewModel.refreshInterval }, set: { viewModel.refreshInterval = $0 })) {
                     ForEach(intervals, id: \.1) { label, value in
                         Text(label).tag(value)
                     }
@@ -298,7 +298,7 @@ struct InlineSettingsView: View {
                 Text(L("settings.language"))
                     .font(.callout)
                 Spacer()
-                Picker(L("settings.language"), selection: $langManager.currentLanguage) {
+                Picker(L("settings.language"), selection: Binding(get: { langManager.currentLanguage }, set: { langManager.currentLanguage = $0 })) {
                     ForEach(LanguageManager.AppLanguage.allCases) { lang in
                         Text(lang.displayName).tag(lang)
                     }

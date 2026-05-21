@@ -19,8 +19,14 @@ final class LanguageManager: @unchecked Sendable {
         }
     }
 
+    private var _currentLanguage: AppLanguage
+
     var currentLanguage: AppLanguage {
-        didSet { UserDefaults.standard.set(currentLanguage.rawValue, forKey: Self.storageKey) }
+        get { _currentLanguage }
+        set {
+            _currentLanguage = newValue
+            UserDefaults.standard.set(newValue.rawValue, forKey: Self.storageKey)
+        }
     }
 
     private static let storageKey = "appLanguage"
@@ -28,10 +34,10 @@ final class LanguageManager: @unchecked Sendable {
     private init() {
         if let stored = UserDefaults.standard.string(forKey: Self.storageKey),
            let lang = AppLanguage(rawValue: stored) {
-            currentLanguage = lang
+            _currentLanguage = lang
         } else {
             let preferred = Locale.preferredLanguages.first ?? ""
-            currentLanguage = preferred.hasPrefix("zh") ? .zhHans : .en
+            _currentLanguage = preferred.hasPrefix("zh") ? .zhHans : .en
         }
     }
 
