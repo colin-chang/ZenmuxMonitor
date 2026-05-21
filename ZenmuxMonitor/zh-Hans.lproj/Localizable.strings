@@ -7,7 +7,8 @@
 "header.settings" = "设置";
 
 /* Settings */
-"settings.api_key" = "API Key";
+"settings.api_key" = "API Key（免费）";
+"settings.api_key.register" = "注册";
 "settings.api_key.get" = "获取";
 "settings.api_key.placeholder" = "Management API Key";
 "settings.save" = "保存";
@@ -16,6 +17,10 @@
 "settings.delete" = "删除";
 "settings.refresh_interval" = "刷新间隔";
 "settings.language" = "语言";
+"settings.prevent_sleep" = "阻止电脑休眠";
+"settings.prevent_sleep.on" = "已阻止休眠 — 点击取消";
+"settings.prevent_sleep.off" = "未阻止休眠 — 点击开启";
+"settings.launch_at_login" = "开机自动启动";
 "settings.interval.1min" = "1 分钟";
 "settings.interval.5min" = "5 分钟";
 "settings.interval.15min" = "15 分钟";
@@ -30,7 +35,6 @@
 "countdown.hours_minutes" = "%d小时%d分后重置";
 "countdown.minutes" = "%d分后重置";
 "countdown.days_hours_minutes" = "%d天%d小时%d分后重置";
-"countdown.days_hours" = "%d天%d小时后重置";
 
 /* PAYG */
 "payg.balance" = "PAYG 余额";
@@ -57,3 +61,14 @@
 "no_api_key" = "未配置 API Key";
 "configure_api_key" = "配置 API Key";
 "retry" = "重试";
+
+/* Update */
+"update.check" = "检查更新";
+"update.available" = "有新版本可用";
+"update.now" = "立即更新";
+"update.updating" = "更新中…";
+"update.up_to_date" = "已是最新版本";
+"update.error.network" = "检查更新失败";
+"update.error.dmg_not_found" = "未找到下载文件";
+"update.error.mount_failed" = "无法挂载 DMG";
+"update.error.app_not_found" = "DMG 中未找到应用";

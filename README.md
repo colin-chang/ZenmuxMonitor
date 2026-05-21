@@ -6,7 +6,13 @@
 
 English Version | [中文版本](./README_CN.md)
 
-A lightweight macOS menu bar app for monitoring [ZenMux](https://zenmux.ai) subscription quotas and usage in real time.
+## What is ZenMux?
+
+[ZenMux](https://zenmux.ai/invite/1C3QLF) is a unified LLM aggregator — one API key to access ChatGPT / Claude / Gemini / DeepSeek / GLM and other mainstream models from Google, DeepSeek, and more. Features smart model routing, automatic failover, and an insurance-backed compensation mechanism for output quality issues — making it secure, stable, and cost-effective.
+
+## What is ZenMux Monitor?
+
+A lightweight macOS menu bar app for monitoring [ZenMux](https://zenmux.ai/invite/1C3QLF) subscription quotas and usage in real time.
 
 ![Screenshot](./sample.webp)
 
@@ -36,7 +42,7 @@ Download the latest DMG from the [Releases](../../releases) page, then drag **Ze
 
 1. Get your Management API Key from the [ZenMux Management Panel](https://zenmux.ai/platform/management)
 2. Left-click the menu bar icon → click the gear icon → paste your API Key → Save
-
+ 
 ## Requirements
 
 - macOS 14.0 (Sonoma) or later

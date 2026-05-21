@@ -1,10 +1,10 @@
 import Foundation
 
 struct PAYGBalance: Codable, Sendable {
-    let currency: String
-    let totalCredits: Double
-    let topUpCredits: Double
-    let bonusCredits: Double
+    let currency: String?
+    let totalCredits: Double?
+    let topUpCredits: Double?
+    let bonusCredits: Double?
 
     enum CodingKeys: String, CodingKey {
         case currency

@@ -1,9 +1,9 @@
 import Foundation
 
 struct FlowRate: Codable, Sendable {
-    let currency: String
-    let baseUsdPerFlow: Double
-    let effectiveUsdPerFlow: Double
+    let currency: String?
+    let baseUsdPerFlow: Double?
+    let effectiveUsdPerFlow: Double?
 
     enum CodingKeys: String, CodingKey {
         case currency

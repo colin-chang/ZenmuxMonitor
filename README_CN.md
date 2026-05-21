@@ -6,7 +6,13 @@
 
 [English Version](./README.md) | 中文版本
 
-轻量级 macOS 菜单栏应用，实时查看 [ZenMux](https://zenmux.ai) 订阅配额与用量。
+## [ZenMux](https://zenmux.ai/invite/1C3QLF) 是什么？
+
+[ZenMux](https://zenmux.ai/invite/1C3QLF) 是一个统一的大模型聚合器 —— 一个 API Key 即可调用 ChatGPT / Claude / Gemini / DeepSeek / GLM 等国内外主流模型。中国大陆直连可用，无需科学上网，无需海外信用卡，支持支付宝付费。提供智能路由、自动故障转移和保险赔付机制，安全稳定，性价比高。
+
+## ZenMuxMonitor 是什么？
+
+轻量级 macOS 菜单栏应用，实时查看 [ZenMux](https://zenmux.ai/invite/1C3QLF) 订阅配额与用量。
 
 ![示例图片](./sample.webp)
 

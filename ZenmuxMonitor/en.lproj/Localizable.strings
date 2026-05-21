@@ -7,7 +7,8 @@
 "header.settings" = "Settings";
 
 /* Settings */
-"settings.api_key" = "API Key";
+"settings.api_key" = "API Key (Free)";
+"settings.api_key.register" = "Register";
 "settings.api_key.get" = "Get";
 "settings.api_key.placeholder" = "Management API Key";
 "settings.save" = "Save";
@@ -16,6 +17,10 @@
 "settings.delete" = "Delete";
 "settings.refresh_interval" = "Refresh Interval";
 "settings.language" = "Language";
+"settings.prevent_sleep" = "Prevent Sleep";
+"settings.prevent_sleep.on" = "Sleep prevention on — click to allow sleep";
+"settings.prevent_sleep.off" = "Sleep prevention off — click to prevent sleep";
+"settings.launch_at_login" = "Launch at Login";
 "settings.interval.1min" = "1 min";
 "settings.interval.5min" = "5 min";
 "settings.interval.15min" = "15 min";
@@ -30,7 +35,6 @@
 "countdown.hours_minutes" = "%dhr %dmin reset";
 "countdown.minutes" = "%dmin reset";
 "countdown.days_hours_minutes" = "%dd %dhr %dmin reset";
-"countdown.days_hours" = "%dd %dhr reset";
 
 /* PAYG */
 "payg.balance" = "PAYG Balance";
@@ -57,3 +61,14 @@
 "no_api_key" = "API Key not configured";
 "configure_api_key" = "Configure API Key";
 "retry" = "Retry";
+
+/* Update */
+"update.check" = "Check for Updates";
+"update.available" = "New version available";
+"update.now" = "Update Now";
+"update.updating" = "Updating…";
+"update.up_to_date" = "You're up to date";
+"update.error.network" = "Failed to check for updates";
+"update.error.dmg_not_found" = "Download file not found";
+"update.error.mount_failed" = "Failed to mount DMG";
+"update.error.app_not_found" = "App not found in DMG";

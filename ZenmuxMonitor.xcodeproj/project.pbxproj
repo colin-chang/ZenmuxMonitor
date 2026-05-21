@@ -10,7 +10,7 @@
 		08B2B01EAD9BDC34E8D56C97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99BD5EF48307DB06761FF456 /* Assets.xcassets */; };
 		11B824981C0A3EB805A38AF2 /* UsagePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D649126DF7898EDBFAC6C74 /* UsagePanel.swift */; };
 		1F15AC7CBC8623D4D1C831B2 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A3BC2475647AB41CA05623 /* LanguageManager.swift */; };
-		38DB31FDA409748A1C2B01D1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5D102C1401E90F394C0C8B /* SettingsView.swift */; };
+		322672CB44ED06BC4B63B1A3 /* UpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67CD13EE8968AA17E33BA69A /* UpdateChecker.swift */; };
 		640EB9EB0D86E0C31C0A12F6 /* ZenmuxAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0A329BCDA9BE18A258122C /* ZenmuxAPIClient.swift */; };
 		6C8FD87C7E4061524FB26096 /* UsageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8665D15B063087ADB5C4EF3C /* UsageViewModel.swift */; };
 		75C7AC1808D1A53DE86D703C /* FlowRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A45E19F7856EF425EF8E78 /* FlowRate.swift */; };
@@ -23,10 +23,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0190A146A571DD755B38C265 /* zh-Hans.lproj */ = {isa = PBXFileReference; path = "zh-Hans.lproj"; sourceTree = "<group>"; };
+		0190A146A571DD755B38C265 /* zh-Hans.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "zh-Hans.lproj"; sourceTree = "<group>"; };
 		0D649126DF7898EDBFAC6C74 /* UsagePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsagePanel.swift; sourceTree = "<group>"; };
-		109C95930303CDADFE2EB841 /* en.lproj */ = {isa = PBXFileReference; path = en.lproj; sourceTree = "<group>"; };
+		109C95930303CDADFE2EB841 /* en.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = en.lproj; sourceTree = "<group>"; };
 		30789173FCBA7A7D0582C505 /* ZenmuxMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZenmuxMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		67CD13EE8968AA17E33BA69A /* UpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateChecker.swift; sourceTree = "<group>"; };
 		6E0A329BCDA9BE18A258122C /* ZenmuxAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZenmuxAPIClient.swift; sourceTree = "<group>"; };
 		6FDF6384FC5E54AFCC7AE53B /* SubscriptionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDetail.swift; sourceTree = "<group>"; };
 		75A45E19F7856EF425EF8E78 /* FlowRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowRate.swift; sourceTree = "<group>"; };
@@ -35,7 +36,6 @@
 		958A21DA6AFA22CC53B5D57C /* ZenmuxMonitorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZenmuxMonitorApp.swift; sourceTree = "<group>"; };
 		99BD5EF48307DB06761FF456 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B7A3BC2475647AB41CA05623 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
-		BB5D102C1401E90F394C0C8B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F417E10D08C6A1E24CECB702 /* PAYGBalance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PAYGBalance.swift; sourceTree = "<group>"; };
 		FC118AB3A393162C7366F3C0 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		FD34395A672680ED7A2F728B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -80,6 +80,7 @@
 			children = (
 				FC118AB3A393162C7366F3C0 /* KeychainManager.swift */,
 				B7A3BC2475647AB41CA05623 /* LanguageManager.swift */,
+				67CD13EE8968AA17E33BA69A /* UpdateChecker.swift */,
 				6E0A329BCDA9BE18A258122C /* ZenmuxAPIClient.swift */,
 			);
 			path = Services;
@@ -88,7 +89,6 @@
 		80B83AD81A80845CC5579C0B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				BB5D102C1401E90F394C0C8B /* SettingsView.swift */,
 				0D649126DF7898EDBFAC6C74 /* UsagePanel.swift */,
 			);
 			path = Views;
@@ -196,8 +196,8 @@
 				A2D72D9A243BEED1FFBFAA8D /* KeychainManager.swift in Sources */,
 				1F15AC7CBC8623D4D1C831B2 /* LanguageManager.swift in Sources */,
 				ACBAF9686888101D231BAAD5 /* PAYGBalance.swift in Sources */,
-				38DB31FDA409748A1C2B01D1 /* SettingsView.swift in Sources */,
 				8C4ADC712A54079C44D1B6DA /* SubscriptionDetail.swift in Sources */,
+				322672CB44ED06BC4B63B1A3 /* UpdateChecker.swift in Sources */,
 				11B824981C0A3EB805A38AF2 /* UsagePanel.swift in Sources */,
 				6C8FD87C7E4061524FB26096 /* UsageViewModel.swift in Sources */,
 				640EB9EB0D86E0C31C0A12F6 /* ZenmuxAPIClient.swift in Sources */,

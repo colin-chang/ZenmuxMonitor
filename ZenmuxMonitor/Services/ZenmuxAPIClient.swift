@@ -62,7 +62,10 @@ actor ZenmuxAPIClient {
             guard wrapper.success else {
                 throw APIError.apiError
             }
-            return wrapper.data
+            guard let responseData = wrapper.data else {
+                throw APIError.decodingError(DecodingError.valueNotFound(T.self, DecodingError.Context(codingPath: [], debugDescription: "Response data is null")))
+            }
+            return responseData
         } catch let error as APIError {
             throw error
         } catch {

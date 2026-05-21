@@ -1,5 +1,6 @@
 import Foundation
 import Observation
+import ServiceManagement
 
 @MainActor
 @Observable
@@ -15,8 +16,10 @@ final class UsageViewModel: @unchecked Sendable {
     private let client = ZenmuxAPIClient()
     private var refreshTimer: Timer?
     private var autoRefreshStarted = false
+    private var sleepAssertionID: (any NSObjectProtocol)?
 
     private static let refreshIntervalKey = "refreshInterval"
+    private static let preventSleepKey = "preventSleep"
 
     var refreshInterval: TimeInterval {
         didSet { UserDefaults.standard.set(refreshInterval, forKey: Self.refreshIntervalKey) }
@@ -27,9 +30,34 @@ final class UsageViewModel: @unchecked Sendable {
         return !key.isEmpty
     }
 
+    var preventSleep = UserDefaults.standard.bool(forKey: "preventSleep") {
+        didSet {
+            UserDefaults.standard.set(preventSleep, forKey: Self.preventSleepKey)
+            if preventSleep { startSleepPrevention() } else { stopSleepPrevention() }
+        }
+    }
+
+    var launchAtLogin = SMAppService.mainApp.status == .enabled {
+        didSet {
+            do {
+                if launchAtLogin {
+                    try SMAppService.mainApp.register()
+                } else {
+                    try SMAppService.mainApp.unregister()
+                }
+            } catch {
+                launchAtLogin = oldValue
+                errorMessage = error.localizedDescription
+            }
+        }
+    }
+
     init() {
         self.refreshInterval = UserDefaults.standard.double(forKey: Self.refreshIntervalKey)
         if self.refreshInterval == 0 { self.refreshInterval = 300 }
+        if preventSleep {
+            startSleepPrevention()
+        }
     }
 
     func refresh() async {
@@ -37,29 +65,45 @@ final class UsageViewModel: @unchecked Sendable {
         isLoading = true
         errorMessage = nil
 
-        do {
-            async let sub = client.fetchSubscriptionDetail()
-            async let payg = client.fetchPAYGBalance()
-            async let flow = client.fetchFlowRate()
+        async let detailTask = client.fetchSubscriptionDetail()
+        async let balanceTask = client.fetchPAYGBalance()
+        async let rateTask = client.fetchFlowRate()
 
-            let (subscription, balance, rate) = try await (sub, payg, flow)
+        var errors: [String] = []
 
-            self.subscriptionDetail = subscription
-            self.paygBalance = balance
-            self.flowRate = rate
-            self.lastUpdated = Date()
-        } catch {
-            self.errorMessage = error.localizedDescription
+        do { subscriptionDetail = try await detailTask } catch { errors.append(error.localizedDescription) }
+        do { paygBalance = try await balanceTask } catch { errors.append(error.localizedDescription) }
+        do { flowRate = try await rateTask } catch { errors.append(error.localizedDescription) }
+
+        if !errors.isEmpty {
+            errorMessage = errors.joined(separator: "\n")
+        }
+
+        if subscriptionDetail != nil || paygBalance != nil || flowRate != nil {
+            lastUpdated = Date()
         }
 
         isLoading = false
     }
 
     func requestRefresh() {
-        isLoading = false
         Task {
             await refresh()
         }
+    }
+
+    func startSleepPrevention() {
+        guard sleepAssertionID == nil else { return }
+        sleepAssertionID = ProcessInfo.processInfo.beginActivity(
+            options: [.idleSystemSleepDisabled, .userInitiated],
+            reason: "Preventing sleep for remote access"
+        )
+    }
+
+    func stopSleepPrevention() {
+        guard let id = sleepAssertionID else { return }
+        ProcessInfo.processInfo.endActivity(id)
+        sleepAssertionID = nil
     }
 
     func onPanelAppear() {

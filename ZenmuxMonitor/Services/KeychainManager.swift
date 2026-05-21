@@ -6,7 +6,9 @@ enum KeychainManager {
     static let accountKey = "management-key"
 
     static func save(key: String, value: String) throws {
-        guard let data = value.data(using: .utf8) else { return }
+        guard let data = value.data(using: .utf8) else {
+            throw KeychainError.encodingFailed
+        }
 
         // Delete existing entry first
         delete(key: key)
@@ -51,11 +53,14 @@ enum KeychainManager {
 
     enum KeychainError: LocalizedError {
         case saveFailed(OSStatus)
+        case encodingFailed
 
         var errorDescription: String? {
             switch self {
             case .saveFailed(let status):
                 "Keychain save failed (OSStatus \(status))"
+            case .encodingFailed:
+                "Failed to encode value as UTF-8"
             }
         }
     }

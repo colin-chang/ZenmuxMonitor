@@ -26,7 +26,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     // Re-registers on every @Observable change to keep the title in sync.
     private func observeLabel() {
         withObservationTracking {
-            if let pct = viewModel.subscriptionDetail?.quota5HourDisplay.usagePercentage {
+            if let pct = viewModel.subscriptionDetail?.quota5HourDisplay?.usagePercentage {
                 statusItem.button?.title = String(format: "%.0f%%", pct * 100)
             } else {
                 statusItem.button?.title = ""

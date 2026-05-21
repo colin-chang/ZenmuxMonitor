@@ -1,42 +1,44 @@
 import Foundation
 
 struct SubscriptionDetail: Codable, Sendable {
-    let plan: PlanInfo
-    let currency: String
-    let baseUsdPerFlow: Double
-    let effectiveUsdPerFlow: Double
-    let accountStatus: String
-    let quota5Hour: QuotaWindow
-    let quota7Day: QuotaWindow
-    let quotaMonthly: QuotaMonthly
+    let plan: PlanInfo?
+    let currency: String?
+    let baseUsdPerFlow: Double?
+    let effectiveUsdPerFlow: Double?
+    let accountStatus: String?
+    let quota5Hour: QuotaWindow?
+    let quota7Day: QuotaWindow?
+    let quotaMonthly: QuotaMonthly?
 
-    var quota5HourDisplay: QuotaWindowDisplay {
-        QuotaWindowDisplay(
+    var quota5HourDisplay: QuotaWindowDisplay? {
+        guard let q = quota5Hour else { return nil }
+        return QuotaWindowDisplay(
             label: L("quota.5hour"),
             is5Hour: true,
-            usagePercentage: quota5Hour.usagePercentage,
-            flowsUsed: quota5Hour.usedFlows,
-            flowsMax: quota5Hour.maxFlows,
-            resetsAt: quota5Hour.resetsAt
+            usagePercentage: q.usagePercentage,
+            flowsUsed: q.usedFlows,
+            flowsMax: q.maxFlows,
+            resetsAt: q.resetsAt
         )
     }
 
-    var quota7DayDisplay: QuotaWindowDisplay {
-        QuotaWindowDisplay(
+    var quota7DayDisplay: QuotaWindowDisplay? {
+        guard let q = quota7Day else { return nil }
+        return QuotaWindowDisplay(
             label: L("quota.7day"),
             is5Hour: false,
-            usagePercentage: quota7Day.usagePercentage,
-            flowsUsed: quota7Day.usedFlows,
-            flowsMax: quota7Day.maxFlows,
-            resetsAt: quota7Day.resetsAt
+            usagePercentage: q.usagePercentage,
+            flowsUsed: q.usedFlows,
+            flowsMax: q.maxFlows,
+            resetsAt: q.resetsAt
         )
     }
 
     struct PlanInfo: Codable, Sendable {
         let tier: String
-        let amountUsd: Double
-        let interval: String
-        let expiresAt: String
+        let amountUsd: Double?
+        let interval: String?
+        let expiresAt: String?
 
         var displayName: String {
             tier.capitalized
@@ -50,13 +52,13 @@ struct SubscriptionDetail: Codable, Sendable {
     }
 
     struct QuotaWindow: Codable, Sendable {
-        let usagePercentage: Double
-        let resetsAt: String
-        let maxFlows: Double
-        let usedFlows: Double
-        let remainingFlows: Double
-        let usedValueUsd: Double
-        let maxValueUsd: Double
+        let usagePercentage: Double?
+        let resetsAt: String?
+        let maxFlows: Double?
+        let usedFlows: Double?
+        let remainingFlows: Double?
+        let usedValueUsd: Double?
+        let maxValueUsd: Double?
 
         enum CodingKeys: String, CodingKey {
             case usagePercentage = "usage_percentage"
@@ -70,8 +72,8 @@ struct SubscriptionDetail: Codable, Sendable {
     }
 
     struct QuotaMonthly: Codable, Sendable {
-        let maxFlows: Double
-        let maxValueUsd: Double
+        let maxFlows: Double?
+        let maxValueUsd: Double?
 
         enum CodingKeys: String, CodingKey {
             case maxFlows = "max_flows"
@@ -85,16 +87,21 @@ struct SubscriptionDetail: Codable, Sendable {
         let is5Hour: Bool
         let usagePercentage: Double?
         let flowsUsed: Double?
-        let flowsMax: Double
+        let flowsMax: Double?
         let resetsAt: String?
 
         var isHighUsage: Bool { (usagePercentage ?? 0) > 0.8 }
         var isWarning: Bool { (usagePercentage ?? 0) > 0.5 }
 
+        nonisolated(unsafe) private static let isoFormatter: ISO8601DateFormatter = {
+            let f = ISO8601DateFormatter()
+            f.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            return f
+        }()
+
         func resetCountdown() -> String? {
             guard let iso = resetsAt else { return nil }
-            let formatter = ISO8601DateFormatter()
-            formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            let formatter = Self.isoFormatter
             guard let target = formatter.date(from: iso) else { return nil }
             let interval = target.timeIntervalSinceNow
             guard interval > 0 else { return nil }
@@ -135,5 +142,15 @@ struct SubscriptionDetail: Codable, Sendable {
 /// Top-level API response wrapper
 struct APIResponse<T: Decodable>: Decodable {
     let success: Bool
-    let data: T
+    let data: T?
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        success = try container.decode(Bool.self, forKey: .success)
+        data = try container.decodeIfPresent(T.self, forKey: .data)
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case success, data
+    }
 }
