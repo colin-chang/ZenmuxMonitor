@@ -38,6 +38,8 @@ targets:
           SWIFT_OPTIMIZATION_LEVEL: "-Onone"
         Release:
           SWIFT_COMPILATION_MODE: wholemodule
+    dependencies:
+      - sdk: ServiceManagement.framework
     entitlements:
       path: ZenmuxMonitor/ZenmuxMonitor.entitlements
       properties:
