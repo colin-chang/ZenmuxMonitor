@@ -118,14 +118,13 @@ final class UpdateChecker {
         }
 
         let currentApp = Bundle.main.bundleURL
-        let installDir = currentApp.deletingLastPathComponent()
         let scriptContent = """
         #!/bin/bash
+        set -e
         PID=\(ProcessInfo.processInfo.processIdentifier)
         while kill -0 $PID 2>/dev/null; do sleep 0.5; done
-        rm -rf "\(currentApp.path)"
-        cp -R "\(newApp.path)" "\(installDir.path)/"
-        hdiutil detach "\(mountPoint.path)" -quiet
+        ditto "\(newApp.path)" "\(currentApp.path)"
+        hdiutil detach "\(mountPoint.path)" -quiet || true
         open "\(currentApp.path)"
         rm -f "$0"
         """
