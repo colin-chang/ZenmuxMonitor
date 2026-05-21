@@ -14,7 +14,7 @@
 
 轻量级 macOS 菜单栏应用，实时查看 [ZenMux](https://zenmux.ai/invite/1C3QLF) 订阅配额与用量。
 
-![示例图片](./sample.webp)
+![示例图片](./sample_cn.webp)
 
 ## 功能
 
