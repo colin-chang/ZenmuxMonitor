@@ -78,15 +78,25 @@ final class UsageViewModel: @unchecked Sendable {
         isLoading = true
         errorMessage = nil
 
-        async let detailTask = client.fetchSubscriptionDetail()
-        async let balanceTask = client.fetchPAYGBalance()
-        async let rateTask = client.fetchFlowRate()
-
         var errors: [String] = []
 
-        do { subscriptionDetail = try await detailTask } catch { errors.append(error.localizedDescription) }
-        do { paygBalance = try await balanceTask } catch { errors.append(error.localizedDescription) }
-        do { flowRate = try await rateTask } catch { errors.append(error.localizedDescription) }
+        do {
+            subscriptionDetail = try await client.fetchSubscriptionDetail()
+        } catch {
+            errors.append(error.localizedDescription)
+        }
+
+        do {
+            paygBalance = try await client.fetchPAYGBalance()
+        } catch {
+            errors.append(error.localizedDescription)
+        }
+
+        do {
+            flowRate = try await client.fetchFlowRate()
+        } catch {
+            errors.append(error.localizedDescription)
+        }
 
         if !errors.isEmpty {
             errorMessage = errors.joined(separator: "\n")
