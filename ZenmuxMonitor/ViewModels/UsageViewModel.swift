@@ -1,4 +1,5 @@
 import Foundation
+import IOKit.pwr_mgt
 import Observation
 import ServiceManagement
 
@@ -16,7 +17,7 @@ final class UsageViewModel: @unchecked Sendable {
     private let client = ZenmuxAPIClient()
     private var refreshTimer: Timer?
     private var autoRefreshStarted = false
-    private var sleepAssertionID: (any NSObjectProtocol)?
+    private var sleepAssertionID: IOPMAssertionID = 0
 
     private static let refreshIntervalKey = "refreshInterval"
     private static let preventSleepKey = "preventSleep"
@@ -116,17 +117,23 @@ final class UsageViewModel: @unchecked Sendable {
     }
 
     func startSleepPrevention() {
-        guard sleepAssertionID == nil else { return }
-        sleepAssertionID = ProcessInfo.processInfo.beginActivity(
-            options: [.idleSystemSleepDisabled, .userInitiated],
-            reason: "Preventing sleep for remote access"
+        guard sleepAssertionID == 0 else { return }
+        let reason = "Preventing sleep for remote access" as CFString
+        let result = IOPMAssertionCreateWithName(
+            kIOPMAssertionTypePreventUserIdleSystemSleep as CFString,
+            IOPMAssertionLevel(kIOPMAssertionLevelOn),
+            reason,
+            &sleepAssertionID
         )
+        if result != kIOReturnSuccess {
+            sleepAssertionID = 0
+        }
     }
 
     func stopSleepPrevention() {
-        guard let id = sleepAssertionID else { return }
-        ProcessInfo.processInfo.endActivity(id)
-        sleepAssertionID = nil
+        guard sleepAssertionID != 0 else { return }
+        IOPMAssertionRelease(sleepAssertionID)
+        sleepAssertionID = 0
     }
 
     func onPanelAppear() {

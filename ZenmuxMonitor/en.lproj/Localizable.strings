@@ -1,6 +1,8 @@
 /* Menu */
 "menu.refresh" = "Refresh";
 "menu.settings" = "Settings…";
+"menu.prevent_sleep" = "Prevent Sleep";
+"menu.launch_at_login" = "Launch at Login";
 "menu.quit" = "Quit";
 
 /* Header */
@@ -18,8 +20,9 @@
 "settings.refresh_interval" = "Refresh Interval";
 "settings.language" = "Language";
 "settings.prevent_sleep" = "Prevent Sleep";
-"settings.prevent_sleep.on" = "Sleep prevention on — click to allow sleep";
+"settings.prevent_sleep.on" = "Sleep prevention on — screen may dim, system stays awake. Click to turn off";
 "settings.prevent_sleep.off" = "Sleep prevention off — click to prevent sleep";
+"settings.prevent_sleep.hint" = "The screen may still turn off, but the system stays awake — background tasks and network remain active.";
 "settings.launch_at_login" = "Launch at Login";
 "settings.interval.1min" = "1 min";
 "settings.interval.5min" = "5 min";

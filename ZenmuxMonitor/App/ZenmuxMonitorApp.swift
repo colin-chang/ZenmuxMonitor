@@ -78,11 +78,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         refresh.target = self
         let settings = NSMenuItem(title: L("menu.settings"), action: #selector(settingsAction), keyEquivalent: "")
         settings.target = self
-        let quit = NSMenuItem(title: L("menu.quit"), action: #selector(quitAction), keyEquivalent: "")
-        quit.target = self
+
+        let preventSleep = NSMenuItem(title: L("menu.prevent_sleep"), action: #selector(togglePreventSleep), keyEquivalent: "")
+        preventSleep.target = self
+        preventSleep.state = viewModel.preventSleep ? .on : .off
+
+        let launchAtLogin = NSMenuItem(title: L("menu.launch_at_login"), action: #selector(toggleLaunchAtLogin), keyEquivalent: "")
+        launchAtLogin.target = self
+        launchAtLogin.state = viewModel.launchAtLogin ? .on : .off
+
         menu.addItem(refresh)
+        menu.addItem(preventSleep)
+        menu.addItem(launchAtLogin)
+        menu.addItem(.separator())
         menu.addItem(settings)
         menu.addItem(.separator())
+
+        let quit = NSMenuItem(title: L("menu.quit"), action: #selector(quitAction), keyEquivalent: "")
+        quit.target = self
         menu.addItem(quit)
         // Temporarily assign so NSStatusItem positions the menu correctly below the icon.
         statusItem.menu = menu
@@ -97,6 +110,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         togglePopover(button)
     }
     @objc private func quitAction() { NSApp.terminate(nil) }
+    @objc private func togglePreventSleep() { viewModel.preventSleep.toggle() }
+    @objc private func toggleLaunchAtLogin() { viewModel.launchAtLogin.toggle() }
 }
 
 @main

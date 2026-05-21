@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 
 struct UsagePanel: View {
@@ -193,6 +194,7 @@ struct InlineSettingsView: View {
     @Bindable var viewModel: UsageViewModel
     @State private var apiKeyInput = ""
     @State private var saveMessage = ""
+    @State private var showSleepHelp = false
     @State private var updateChecker = UpdateChecker()
     @Bindable private var langManager = LanguageManager.shared
 
@@ -308,8 +310,19 @@ struct InlineSettingsView: View {
             }
 
             HStack {
-                Text(L("settings.prevent_sleep"))
-                    .font(.callout)
+                HStack(spacing: 3) {
+                    Text(L("settings.prevent_sleep"))
+                        .font(.callout)
+                    Button {
+                        showSleepHelp.toggle()
+                    } label: {
+                        Image(systemName: "questionmark.circle.fill")
+                            .font(.caption2)
+                            .foregroundStyle(.tertiary)
+                    }
+                    .buttonStyle(.plain)
+                    .background(SleepHelpPopover(isPresented: $showSleepHelp, text: L("settings.prevent_sleep.hint")))
+                }
                 Spacer()
                 Toggle("", isOn: Binding(get: { viewModel.preventSleep }, set: { viewModel.preventSleep = $0 }))
                     .toggleStyle(.switch)
@@ -581,6 +594,62 @@ struct ErrorBanner: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 4)
+    }
+}
+
+// MARK: - Sleep Help Popover
+
+/// Uses AppKit NSPopover to avoid SwiftUI popover nesting issues
+/// when rendered inside the parent NSPopover.
+struct SleepHelpPopover: NSViewRepresentable {
+    @Binding var isPresented: Bool
+    let text: String
+
+    func makeNSView(context: Context) -> NSView {
+        let view = NSView(frame: .zero)
+        return view
+    }
+
+    func updateNSView(_ nsView: NSView, context: Context) {
+        let existing = context.coordinator.popover
+
+        if isPresented && existing == nil {
+            let popover = NSPopover()
+            popover.behavior = .transient
+            popover.delegate = context.coordinator
+            popover.contentViewController = NSHostingController(rootView:
+                Text(text)
+                    .font(.callout)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .frame(width: 250)
+            )
+            popover.show(relativeTo: nsView.bounds, of: nsView, preferredEdge: .maxY)
+            context.coordinator.popover = popover
+        } else if !isPresented && existing != nil {
+            existing?.close()
+            context.coordinator.popover = nil
+        }
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(isPresented: $isPresented)
+    }
+
+    final class Coordinator: NSObject, NSPopoverDelegate {
+        var popover: NSPopover?
+        var isPresented: Binding<Bool>
+
+        init(isPresented: Binding<Bool>) {
+            self.isPresented = isPresented
+        }
+
+        func popoverDidClose(_ notification: Notification) {
+            popover = nil
+            if isPresented.wrappedValue {
+                isPresented.wrappedValue = false
+            }
+        }
     }
 }
 

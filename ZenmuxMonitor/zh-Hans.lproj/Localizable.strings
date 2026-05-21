@@ -1,6 +1,8 @@
 /* Menu */
-"menu.refresh" = "刷新";
+"menu.refresh" = "立即刷新额度";
 "menu.settings" = "设置…";
+"menu.prevent_sleep" = "阻止电脑休眠";
+"menu.launch_at_login" = "开机自启";
 "menu.quit" = "退出";
 
 /* Header */
@@ -18,9 +20,10 @@
 "settings.refresh_interval" = "刷新间隔";
 "settings.language" = "语言";
 "settings.prevent_sleep" = "阻止电脑休眠";
-"settings.prevent_sleep.on" = "已阻止休眠 — 点击取消";
+"settings.prevent_sleep.on" = "已阻止休眠（会息屏但不休眠）— 点击取消";
 "settings.prevent_sleep.off" = "未阻止休眠 — 点击开启";
-"settings.launch_at_login" = "开机自动启动";
+"settings.prevent_sleep.hint" = "屏幕仍可能熄灭，但系统不会休眠，后台任务和网络连接保持活跃。";
+"settings.launch_at_login" = "开机自启";
 "settings.interval.1min" = "1 分钟";
 "settings.interval.5min" = "5 分钟";
 "settings.interval.15min" = "15 分钟";
