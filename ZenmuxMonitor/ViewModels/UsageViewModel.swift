@@ -79,27 +79,24 @@ final class UsageViewModel: @unchecked Sendable {
         isLoading = true
         errorMessage = nil
 
-        async let subResult = partial(client.fetchSubscriptionDetail)
-        async let paygResult = partial(client.fetchPAYGBalance)
-        async let flowResult = partial(client.fetchFlowRate)
-
-        let (sub, payg, flow) = await (subResult, paygResult, flowResult)
-
         var errors: [String] = []
 
-        switch sub {
-        case .success(let detail): subscriptionDetail = detail
-        case .failure(let error): errors.append(error.localizedDescription)
+        do {
+            subscriptionDetail = try await client.fetchSubscriptionDetail()
+        } catch {
+            errors.append(error.localizedDescription)
         }
 
-        switch payg {
-        case .success(let balance): paygBalance = balance
-        case .failure(let error): errors.append(error.localizedDescription)
+        do {
+            paygBalance = try await client.fetchPAYGBalance()
+        } catch {
+            errors.append(error.localizedDescription)
         }
 
-        switch flow {
-        case .success(let rate): flowRate = rate
-        case .failure(let error): errors.append(error.localizedDescription)
+        do {
+            flowRate = try await client.fetchFlowRate()
+        } catch {
+            errors.append(error.localizedDescription)
         }
 
         if !errors.isEmpty {
@@ -111,14 +108,6 @@ final class UsageViewModel: @unchecked Sendable {
         }
 
         isLoading = false
-    }
-
-    private func partial<T: Sendable>(_ operation: @escaping @Sendable () async throws -> T) async -> Result<T, Error> {
-        do {
-            return .success(try await operation())
-        } catch {
-            return .failure(error)
-        }
     }
 
     func requestRefresh() {
