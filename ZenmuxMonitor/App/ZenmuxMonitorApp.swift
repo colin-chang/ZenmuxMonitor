@@ -74,7 +74,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             if let vef = parent as? NSVisualEffectView {
                 vef.material = .popover
                 vef.state = .active
-                vef.blendingMode = .behindWindow
+                vef.blendingMode = .withinWindow
             }
             parent = parent?.superview
         }

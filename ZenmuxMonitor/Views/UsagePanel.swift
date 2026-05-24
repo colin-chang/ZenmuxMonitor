@@ -600,7 +600,7 @@ struct ErrorBanner: View {
 
 // MARK: - NSPopover Vibrancy Fix
 
-/// Configures NSPopover internal NSVisualEffectView to use .behindWindow
+/// Configures NSPopover internal NSVisualEffectView to use .withinWindow
 /// blending, preventing halo on colored text in light mode while keeping
 /// the window semi-transparent.
 @MainActor
@@ -611,7 +611,7 @@ private func fixNSPopoverVibrancy(_ popover: NSPopover) {
         if let vef = parent as? NSVisualEffectView {
             vef.material = .popover
             vef.state = .active
-            vef.blendingMode = .behindWindow
+            vef.blendingMode = .withinWindow
         }
         parent = parent?.superview
     }
