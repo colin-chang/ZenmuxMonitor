@@ -479,6 +479,7 @@ struct ProgressBar: View {
 
 struct QuotaRow: View {
     let window: SubscriptionDetail.QuotaWindowDisplay
+    @State private var showAbsoluteTime = false
 
     private var progressColor: Color {
         window.isHighUsage ? .red : window.isWarning ? .orange : .green
@@ -513,8 +514,17 @@ struct QuotaRow: View {
                     Text("\(formatNumber(max)) \(L("quota.flows"))")
                 }
                 Spacer()
-                if let countdown = window.resetCountdown() {
-                    MonospacedCountdownText(text: countdown)
+                if let countdown = window.resetCountdown(),
+                   let absolute = window.resetAbsoluteTime() {
+                    Button {
+                        showAbsoluteTime.toggle()
+                    } label: {
+                        Text(showAbsoluteTime ? absolute : countdown)
+                            .font(.system(.callout, design: .monospaced))
+                            .foregroundStyle(.blue)
+                    }
+                    .buttonStyle(.plain)
+                    .help(L("countdown.click_to_toggle"))
                 }
             }
             .font(.callout)
@@ -526,15 +536,6 @@ struct QuotaRow: View {
         if value >= 1_000_000 { return String(format: "%.1fM", value / 1_000_000) }
         if value >= 1_000 { return String(format: "%.1fK", value / 1_000) }
         return String(format: "%.1f", value)
-    }
-}
-
-struct MonospacedCountdownText: View {
-    let text: String
-
-    var body: some View {
-        Text(text)
-            .font(.system(.callout, design: .monospaced))
     }
 }
 
@@ -597,6 +598,24 @@ struct ErrorBanner: View {
     }
 }
 
+// MARK: - NSPopover Vibrancy Fix
+
+/// Configures NSPopover internal NSVisualEffectView to use .behindWindow
+/// blending, preventing halo on colored text in light mode while keeping
+/// the window semi-transparent.
+private func fixNSPopoverVibrancy(_ popover: NSPopover) {
+    guard let contentView = popover.contentViewController?.view else { return }
+    var parent: NSView? = contentView.superview
+    while parent != nil {
+        if let vef = parent as? NSVisualEffectView {
+            vef.material = .popover
+            vef.state = .active
+            vef.blendingMode = .behindWindow
+        }
+        parent = parent?.superview
+    }
+}
+
 // MARK: - Sleep Help Popover
 
 /// Uses AppKit NSPopover to avoid SwiftUI popover nesting issues
@@ -625,6 +644,7 @@ struct SleepHelpPopover: NSViewRepresentable {
                     .frame(width: 250)
             )
             popover.show(relativeTo: nsView.bounds, of: nsView, preferredEdge: .maxY)
+            fixNSPopoverVibrancy(popover)
             context.coordinator.popover = popover
         } else if !isPresented && existing != nil {
             existing?.close()

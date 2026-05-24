@@ -42,14 +42,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         popover.contentViewController = NSHostingController(
             rootView: UsagePanel(viewModel: viewModel)
         )
-        applyPopoverAppearance()
-    }
-
-    /// Setting an explicit appearance disables NSPopover vibrancy,
-    /// which causes colored text to render with a halo in light mode.
-    private func applyPopoverAppearance() {
-        let isDark = NSApp.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
-        popover.appearance = NSAppearance(named: isDark ? .darkAqua : .aqua)
     }
 
     @objc private func handleClick(_ sender: NSStatusBarButton) {
@@ -65,10 +57,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if popover.isShown {
             popover.performClose(nil)
         } else {
-            applyPopoverAppearance()
             NSApp.activate(ignoringOtherApps: true)
             popover.show(relativeTo: sender.bounds, of: sender, preferredEdge: .minY)
+            fixVibrancy()
             if viewModel.hasAPIKey { viewModel.requestRefresh() }
+        }
+    }
+
+    /// Walk popover view hierarchy to configure internal NSVisualEffectView
+    /// blending mode, preventing halo on colored text in light mode while
+    /// keeping the window semi-transparent.
+    private func fixVibrancy() {
+        guard let contentView = popover.contentViewController?.view else { return }
+        var parent: NSView? = contentView.superview
+        while parent != nil {
+            if let vef = parent as? NSVisualEffectView {
+                vef.material = .popover
+                vef.state = .active
+                vef.blendingMode = .behindWindow
+            }
+            parent = parent?.superview
         }
     }
 

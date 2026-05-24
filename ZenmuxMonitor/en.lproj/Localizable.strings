@@ -39,6 +39,9 @@
 "countdown.minutes" = "%dmin reset";
 "countdown.days_hours_minutes" = "%dd %dhr %dmin reset";
 
+"countdown.resets_at" = "%@";
+"countdown.click_to_toggle" = "Click to toggle countdown / reset time";
+
 /* PAYG */
 "payg.balance" = "PAYG Balance";
 "payg.total" = "Total";

@@ -99,6 +99,19 @@ struct SubscriptionDetail: Codable, Sendable {
             return f
         }()
 
+        nonisolated(unsafe) private static let absoluteFormatter: DateFormatter = {
+            let f = DateFormatter()
+            f.dateFormat = "yyyy-MM-dd HH:mm"
+            return f
+        }()
+
+        func resetAbsoluteTime() -> String? {
+            guard let iso = resetsAt else { return nil }
+            guard let target = Self.isoFormatter.date(from: iso) else { return nil }
+            let timeString = Self.absoluteFormatter.string(from: target)
+            return String(format: L("countdown.resets_at"), timeString)
+        }
+
         func resetCountdown() -> String? {
             guard let iso = resetsAt else { return nil }
             let formatter = Self.isoFormatter

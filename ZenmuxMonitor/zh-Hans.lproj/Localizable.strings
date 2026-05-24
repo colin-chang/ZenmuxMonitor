@@ -39,6 +39,9 @@
 "countdown.minutes" = "%d分后重置";
 "countdown.days_hours_minutes" = "%d天%d小时%d分后重置";
 
+"countdown.resets_at" = "%@ 重置";
+"countdown.click_to_toggle" = "点击切换倒计时/具体时间";
+
 /* PAYG */
 "payg.balance" = "PAYG 余额";
 "payg.total" = "总计";
