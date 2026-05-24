@@ -11,6 +11,8 @@
 		11B824981C0A3EB805A38AF2 /* UsagePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D649126DF7898EDBFAC6C74 /* UsagePanel.swift */; };
 		1F15AC7CBC8623D4D1C831B2 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A3BC2475647AB41CA05623 /* LanguageManager.swift */; };
 		322672CB44ED06BC4B63B1A3 /* UpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67CD13EE8968AA17E33BA69A /* UpdateChecker.swift */; };
+		3B13340E2FC2F7810092CA96 /* InlineSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B13340D2FC2F7810092CA96 /* InlineSettingsView.swift */; };
+		3B1334102FC2F78F0092CA96 /* SleepHelpPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B13340F2FC2F78F0092CA96 /* SleepHelpPopover.swift */; };
 		640EB9EB0D86E0C31C0A12F6 /* ZenmuxAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0A329BCDA9BE18A258122C /* ZenmuxAPIClient.swift */; };
 		6C8FD87C7E4061524FB26096 /* UsageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8665D15B063087ADB5C4EF3C /* UsageViewModel.swift */; };
 		75C7AC1808D1A53DE86D703C /* FlowRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A45E19F7856EF425EF8E78 /* FlowRate.swift */; };
@@ -27,6 +29,8 @@
 		0D649126DF7898EDBFAC6C74 /* UsagePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsagePanel.swift; sourceTree = "<group>"; };
 		109C95930303CDADFE2EB841 /* en.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = en.lproj; sourceTree = "<group>"; };
 		30789173FCBA7A7D0582C505 /* ZenmuxMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZenmuxMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B13340D2FC2F7810092CA96 /* InlineSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineSettingsView.swift; sourceTree = "<group>"; };
+		3B13340F2FC2F78F0092CA96 /* SleepHelpPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepHelpPopover.swift; sourceTree = "<group>"; };
 		67CD13EE8968AA17E33BA69A /* UpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateChecker.swift; sourceTree = "<group>"; };
 		6E0A329BCDA9BE18A258122C /* ZenmuxAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZenmuxAPIClient.swift; sourceTree = "<group>"; };
 		6FDF6384FC5E54AFCC7AE53B /* SubscriptionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDetail.swift; sourceTree = "<group>"; };
@@ -90,6 +94,8 @@
 			isa = PBXGroup;
 			children = (
 				0D649126DF7898EDBFAC6C74 /* UsagePanel.swift */,
+				3B13340D2FC2F7810092CA96 /* InlineSettingsView.swift */,
+				3B13340F2FC2F78F0092CA96 /* SleepHelpPopover.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -194,6 +200,8 @@
 			files = (
 				75C7AC1808D1A53DE86D703C /* FlowRate.swift in Sources */,
 				A2D72D9A243BEED1FFBFAA8D /* KeychainManager.swift in Sources */,
+				3B1334102FC2F78F0092CA96 /* SleepHelpPopover.swift in Sources */,
+				3B13340E2FC2F7810092CA96 /* InlineSettingsView.swift in Sources */,
 				1F15AC7CBC8623D4D1C831B2 /* LanguageManager.swift in Sources */,
 				ACBAF9686888101D231BAAD5 /* PAYGBalance.swift in Sources */,
 				8C4ADC712A54079C44D1B6DA /* SubscriptionDetail.swift in Sources */,

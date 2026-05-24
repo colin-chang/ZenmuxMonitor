@@ -73,6 +73,11 @@ actor ZenmuxAPIClient {
         }
     }
 
+    struct APIResponse<T: Decodable>: Decodable {
+        let success: Bool
+        let data: T?
+    }
+
     enum APIError: LocalizedError {
         case missingKey
         case unauthorized

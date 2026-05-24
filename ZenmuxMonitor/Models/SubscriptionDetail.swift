@@ -151,19 +151,3 @@ struct SubscriptionDetail: Codable, Sendable {
         case quotaMonthly = "quota_monthly"
     }
 }
-
-/// Top-level API response wrapper
-struct APIResponse<T: Decodable>: Decodable {
-    let success: Bool
-    let data: T?
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        success = try container.decode(Bool.self, forKey: .success)
-        data = try container.decodeIfPresent(T.self, forKey: .data)
-    }
-
-    private enum CodingKeys: String, CodingKey {
-        case success, data
-    }
-}

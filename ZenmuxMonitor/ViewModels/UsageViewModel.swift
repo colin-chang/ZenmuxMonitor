@@ -19,16 +19,18 @@ final class UsageViewModel: @unchecked Sendable {
     private var autoRefreshStarted = false
     private var sleepAssertionID: IOPMAssertionID = 0
 
-    private static let refreshIntervalKey = "refreshInterval"
     private static let preventSleepKey = "preventSleep"
 
-    private var _refreshInterval: TimeInterval = 300
+    private var _refreshInterval: TimeInterval = {
+        let stored = UserDefaults.standard.double(forKey: "refreshInterval")
+        return stored > 0 ? stored : 300
+    }()
 
     var refreshInterval: TimeInterval {
         get { _refreshInterval }
         set {
             _refreshInterval = newValue
-            UserDefaults.standard.set(newValue, forKey: Self.refreshIntervalKey)
+            UserDefaults.standard.set(newValue, forKey: "refreshInterval")
         }
     }
 
@@ -67,9 +69,7 @@ final class UsageViewModel: @unchecked Sendable {
     }
 
     init() {
-        let stored = UserDefaults.standard.double(forKey: Self.refreshIntervalKey)
-        _refreshInterval = stored > 0 ? stored : 300
-        if preventSleep {
+        if _preventSleep {
             startSleepPrevention()
         }
     }
@@ -79,24 +79,27 @@ final class UsageViewModel: @unchecked Sendable {
         isLoading = true
         errorMessage = nil
 
+        async let subResult = partial(client.fetchSubscriptionDetail)
+        async let paygResult = partial(client.fetchPAYGBalance)
+        async let flowResult = partial(client.fetchFlowRate)
+
+        let (sub, payg, flow) = await (subResult, paygResult, flowResult)
+
         var errors: [String] = []
 
-        do {
-            subscriptionDetail = try await client.fetchSubscriptionDetail()
-        } catch {
-            errors.append(error.localizedDescription)
+        switch sub {
+        case .success(let detail): subscriptionDetail = detail
+        case .failure(let error): errors.append(error.localizedDescription)
         }
 
-        do {
-            paygBalance = try await client.fetchPAYGBalance()
-        } catch {
-            errors.append(error.localizedDescription)
+        switch payg {
+        case .success(let balance): paygBalance = balance
+        case .failure(let error): errors.append(error.localizedDescription)
         }
 
-        do {
-            flowRate = try await client.fetchFlowRate()
-        } catch {
-            errors.append(error.localizedDescription)
+        switch flow {
+        case .success(let rate): flowRate = rate
+        case .failure(let error): errors.append(error.localizedDescription)
         }
 
         if !errors.isEmpty {
@@ -108,6 +111,14 @@ final class UsageViewModel: @unchecked Sendable {
         }
 
         isLoading = false
+    }
+
+    private func partial<T: Sendable>(_ operation: @escaping @Sendable () async throws -> T) async -> Result<T, Error> {
+        do {
+            return .success(try await operation())
+        } catch {
+            return .failure(error)
+        }
     }
 
     func requestRefresh() {
@@ -140,7 +151,6 @@ final class UsageViewModel: @unchecked Sendable {
         requestRefresh()
         if !autoRefreshStarted {
             startAutoRefresh()
-            autoRefreshStarted = true
         }
     }
 
@@ -157,6 +167,7 @@ final class UsageViewModel: @unchecked Sendable {
                 await self.refresh()
             }
         }
+        autoRefreshStarted = true
     }
 
     func stopAutoRefresh() {
