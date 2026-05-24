@@ -59,8 +59,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             NSApp.activate(ignoringOtherApps: true)
             popover.show(relativeTo: sender.bounds, of: sender, preferredEdge: .minY)
-            fixNSPopoverVibrancy(popover)
+            fixVibrancy()
             if viewModel.hasAPIKey { viewModel.requestRefresh() }
+        }
+    }
+
+    /// Walk popover view hierarchy to configure internal NSVisualEffectView
+    /// blending mode, preventing halo on colored text in light mode while
+    /// keeping the window semi-transparent.
+    private func fixVibrancy() {
+        guard let contentView = popover.contentViewController?.view else { return }
+        var parent: NSView? = contentView.superview
+        while parent != nil {
+            if let vef = parent as? NSVisualEffectView {
+                vef.material = .popover
+                vef.state = .active
+                vef.blendingMode = .withinWindow
+            }
+            parent = parent?.superview
         }
     }
 
