@@ -24,15 +24,10 @@ jobs:
             ZenmuxMonitor/Info.plist
           echo "App version: $VERSION (build $BUILD_NUM)"
 
-      - name: Install XcodeGen
-        run: brew install xcodegen
-
-      - name: Generate Xcode project
-        run: xcodegen generate
-
       - name: Build
         run: |
           xcodebuild \
+            -project ZenmuxMonitor.xcodeproj \
             -scheme ZenmuxMonitor \
             -configuration Release \
             -derivedDataPath build \
