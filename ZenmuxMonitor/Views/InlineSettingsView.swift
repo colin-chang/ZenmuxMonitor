@@ -204,7 +204,7 @@ struct InlineSettingsView: View {
             } else if let release = updateChecker.latestRelease, !updateChecker.isUpdating {
                 if updateChecker.updateAvailable {
                     HStack {
-                        Text(L("update.available"))
+                        Text(String(format: L("update.available"), release.tagName))
                             .font(.callout)
                             .foregroundStyle(.orange)
                         Spacer()

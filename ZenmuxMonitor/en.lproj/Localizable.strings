@@ -70,7 +70,7 @@
 
 /* Update */
 "update.check" = "Check for Updates";
-"update.available" = "New version available";
+"update.available" = "%@ available";
 "update.now" = "Update Now";
 "update.updating" = "Updating…";
 "update.up_to_date" = "You're up to date";

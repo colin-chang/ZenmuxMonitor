@@ -59,7 +59,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             NSApp.activate(ignoringOtherApps: true)
             popover.show(relativeTo: sender.bounds, of: sender, preferredEdge: .minY)
-            fixVibrancy()
+            // Defer to next runloop so NSPopover's internal NSVisualEffectView
+            // is in the view hierarchy before we configure its blending mode.
+            DispatchQueue.main.async { [weak self] in
+                self?.fixVibrancy()
+            }
             if viewModel.hasAPIKey { viewModel.requestRefresh() }
         }
     }

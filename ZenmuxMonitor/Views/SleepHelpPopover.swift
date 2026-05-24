@@ -47,7 +47,7 @@ struct SleepHelpPopover: NSViewRepresentable {
                     .frame(width: 250)
             )
             popover.show(relativeTo: nsView.bounds, of: nsView, preferredEdge: .maxY)
-            fixNSPopoverVibrancy(popover)
+            DispatchQueue.main.async { fixNSPopoverVibrancy(popover) }
             context.coordinator.popover = popover
         } else if !isPresented && existing != nil {
             existing?.close()
