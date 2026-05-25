@@ -59,29 +59,53 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             NSApp.activate(ignoringOtherApps: true)
             popover.show(relativeTo: sender.bounds, of: sender, preferredEdge: .minY)
-            // Defer to next runloop so NSPopover's internal NSVisualEffectView
-            // is in the view hierarchy before we configure its blending mode.
+            // Defer to next runloop so the popover's internal view hierarchy
+            // is fully assembled before we restructure it.
             DispatchQueue.main.async { [weak self] in
-                self?.fixVibrancy()
+                self?.separateContentFromVibrancy()
             }
             if viewModel.hasAPIKey { viewModel.requestRefresh() }
         }
     }
 
-    /// Walk popover view hierarchy to configure internal NSVisualEffectView
-    /// blending mode, preventing halo on colored text in light mode while
-    /// keeping the window semi-transparent.
-    private func fixVibrancy() {
-        guard let contentView = popover.contentViewController?.view else { return }
-        var parent: NSView? = contentView.superview
-        while parent != nil {
-            if let vef = parent as? NSVisualEffectView {
-                vef.material = .popover
-                vef.state = .active
-                vef.blendingMode = .withinWindow
+    /// The popover's internal NSVisualEffectView applies vibrancy compositing
+    /// to all its descendants, which creates a white halo on colored text in
+    /// light mode. To preserve the translucent vibrant background while
+    /// preventing vibrancy on our content, we move the content subtree out
+    /// from under the NSVisualEffectView to be a sibling — same superview,
+    /// same frame, but not a descendant of the vibrant view.
+    private func separateContentFromVibrancy() {
+        guard let hostingView = popover.contentViewController?.view else { return }
+
+        // Walk up from our hosting view to find the NSVisualEffectView.
+        var vev: NSVisualEffectView?
+        var current: NSView? = hostingView
+        while current != nil {
+            if let v = current as? NSVisualEffectView {
+                vev = v
+                break
             }
-            parent = parent?.superview
+            current = current?.superview
         }
+        guard let vev = vev, let vevSuperview = vev.superview else { return }
+
+        // Find the direct child of the VEV that contains our hosting view.
+        var directChild: NSView = hostingView
+        while let parent = directChild.superview, parent != vev {
+            directChild = parent
+        }
+
+        // Guard: already restructured — don't do it again.
+        guard directChild.superview === vev else { return }
+
+        // Move the entire content subtree out to be a sibling of the VEV.
+        directChild.removeFromSuperview()
+        vevSuperview.addSubview(directChild)
+
+        // Pin the content subtree to fill the same frame as the VEV.
+        directChild.translatesAutoresizingMaskIntoConstraints = true
+        directChild.frame = vev.bounds
+        directChild.autoresizingMask = [.width, .height]
     }
 
     private func showContextMenu() {

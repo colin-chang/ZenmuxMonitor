@@ -49,11 +49,16 @@ final class UpdateChecker {
             let url = URL(string: "https://api.github.com/repos/\(repo)/releases/latest")!
             var request = URLRequest(url: url)
             request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
+            request.setValue("ZenmuxMonitor/\(currentVersion) (macOS)", forHTTPHeaderField: "User-Agent")
             request.timeoutInterval = 15
 
             let (data, response) = try await URLSession.shared.data(for: request)
-            guard let http = response as? HTTPURLResponse, (200...299).contains(http.statusCode) else {
+            guard let http = response as? HTTPURLResponse else {
                 throw UpdateError.networkError
+            }
+            guard (200...299).contains(http.statusCode) else {
+                let body = String(data: data, encoding: .utf8) ?? ""
+                throw UpdateError.httpError(statusCode: http.statusCode, body: body)
             }
 
             let release = try JSONDecoder().decode(GitHubRelease.self, from: data)
@@ -166,16 +171,20 @@ final class UpdateChecker {
 
 enum UpdateError: LocalizedError {
     case networkError
+    case httpError(statusCode: Int, body: String)
     case dmgNotFound
     case mountFailed
     case appNotFoundInDmg
 
     var errorDescription: String? {
         switch self {
-        case .networkError: L("update.error.network")
-        case .dmgNotFound: L("update.error.dmg_not_found")
-        case .mountFailed: L("update.error.mount_failed")
-        case .appNotFoundInDmg: L("update.error.app_not_found")
+        case .networkError: return L("update.error.network")
+        case .httpError(let code, let body):
+            let detail = body.isEmpty ? "HTTP \(code)" : "HTTP \(code): \(body.prefix(200))"
+            return "\(L("update.error.network")) (\(detail))"
+        case .dmgNotFound: return L("update.error.dmg_not_found")
+        case .mountFailed: return L("update.error.mount_failed")
+        case .appNotFoundInDmg: return L("update.error.app_not_found")
         }
     }
 }
