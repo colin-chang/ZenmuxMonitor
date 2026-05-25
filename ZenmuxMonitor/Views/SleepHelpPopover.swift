@@ -30,7 +30,7 @@ struct SleepHelpPopover: NSViewRepresentable {
             popover.show(relativeTo: nsView.bounds, of: nsView, preferredEdge: .maxY)
             // Separate content from vibrant view hierarchy so text renders
             // without vibrancy compositing artifacts.
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 PopoverVibrancyFix.separateContent(popover)
             }
             context.coordinator.popover = popover

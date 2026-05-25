@@ -61,7 +61,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             popover.show(relativeTo: sender.bounds, of: sender, preferredEdge: .minY)
             // Defer to next runloop so the popover's internal view hierarchy
             // is fully assembled before we restructure it.
-            DispatchQueue.main.async { [weak self] in
+            Task { @MainActor [weak self] in
                 guard let popover = self?.popover else { return }
                 PopoverVibrancyFix.separateContent(popover)
             }
