@@ -1,7 +1,7 @@
 import Foundation
 import IOKit.pwr_mgt
 
-final class SleepPreventionManager {
+final class SleepPreventionManager: @unchecked Sendable {
     private var assertionID: IOPMAssertionID = 0
 
     var isActive: Bool { assertionID != 0 }
