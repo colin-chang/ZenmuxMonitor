@@ -5,7 +5,7 @@ import AppKit
 /// does not participate in vibrancy compositing — preventing the white
 /// halo on colored text in light mode.
 enum PopoverVibrancyFix {
-    static func separateContent(_ popover: NSPopover) {
+    @MainActor static func separateContent(_ popover: NSPopover) {
         guard let hostingView = popover.contentViewController?.view else { return }
 
         var vev: NSVisualEffectView?
