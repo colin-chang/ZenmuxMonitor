@@ -14,6 +14,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Select Xcode
+        run: |
+          echo "Available Xcode versions:"
+          ls -d /Applications/Xcode*.app 2>/dev/null || true
+          sudo xcode-select -s /Applications/Xcode.app
+          xcodebuild -version
+
       - name: Sync Info.plist version from tag
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
@@ -26,6 +33,7 @@ jobs:
 
       - name: Build
         run: |
+          set -x
           xcodebuild \
             -project ZenmuxMonitor.xcodeproj \
             -scheme ZenmuxMonitor \
@@ -38,9 +46,12 @@ jobs:
 
       - name: Create DMG
         run: |
+          set -x
           APP_PATH="build/Build/Products/Release/ZenmuxMonitor.app"
           DMG_NAME="ZenMuxMonitor-${GITHUB_REF_NAME}.dmg"
           DMG_STAGING="dmg_staging"
+
+          ls -la "$APP_PATH" || echo "APP NOT FOUND AT $APP_PATH"
 
           mkdir -p "$DMG_STAGING"
           cp -R "$APP_PATH" "$DMG_STAGING/"

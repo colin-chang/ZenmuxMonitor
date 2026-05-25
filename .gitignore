@@ -21,3 +21,4 @@ dist/
 
 # Claude
 .claude/
+AGENTS.md
