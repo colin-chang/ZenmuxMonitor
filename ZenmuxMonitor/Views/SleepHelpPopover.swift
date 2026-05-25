@@ -31,43 +31,13 @@ struct SleepHelpPopover: NSViewRepresentable {
             // Separate content from vibrant view hierarchy so text renders
             // without vibrancy compositing artifacts.
             DispatchQueue.main.async {
-                separatePopoverContent(popover)
+                PopoverVibrancyFix.separateContent(popover)
             }
             context.coordinator.popover = popover
         } else if !isPresented && existing != nil {
             existing?.close()
             context.coordinator.popover = nil
         }
-    }
-
-    /// Move the popover's content subtree out from under its internal
-    /// NSVisualEffectView so the vibrant background stays but the content
-    /// does not participate in vibrancy compositing.
-    private func separatePopoverContent(_ popover: NSPopover) {
-        guard let hostingView = popover.contentViewController?.view else { return }
-
-        var vev: NSVisualEffectView?
-        var current: NSView? = hostingView
-        while current != nil {
-            if let v = current as? NSVisualEffectView {
-                vev = v
-                break
-            }
-            current = current?.superview
-        }
-        guard let vev = vev, let vevSuperview = vev.superview else { return }
-
-        var directChild: NSView = hostingView
-        while let parent = directChild.superview, parent != vev {
-            directChild = parent
-        }
-        guard directChild.superview === vev else { return }
-
-        directChild.removeFromSuperview()
-        vevSuperview.addSubview(directChild)
-        directChild.translatesAutoresizingMaskIntoConstraints = true
-        directChild.frame = vev.bounds
-        directChild.autoresizingMask = [.width, .height]
     }
 
     func makeCoordinator() -> Coordinator {

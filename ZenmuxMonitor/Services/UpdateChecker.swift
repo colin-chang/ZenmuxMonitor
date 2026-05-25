@@ -4,22 +4,10 @@ import Foundation
 struct GitHubRelease: Decodable {
     let tagName: String
     let htmlUrl: String
-    let assets: [Asset]
-
-    struct Asset: Decodable {
-        let name: String
-        let browserDownloadUrl: URL
-
-        enum CodingKeys: String, CodingKey {
-            case name
-            case browserDownloadUrl = "browser_download_url"
-        }
-    }
 
     enum CodingKeys: String, CodingKey {
         case tagName = "tag_name"
         case htmlUrl = "html_url"
-        case assets
     }
 }
 
@@ -46,10 +34,8 @@ final class UpdateChecker {
         updateAvailable = false
 
         do {
-            let url = URL(string: "https://api.github.com/repos/\(repo)/releases/latest")!
+            let url = URL(string: "https://github.com/\(repo)/releases.atom")!
             var request = URLRequest(url: url)
-            request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
-            request.setValue("ZenmuxMonitor/\(currentVersion) (macOS)", forHTTPHeaderField: "User-Agent")
             request.timeoutInterval = 15
 
             let (data, response) = try await URLSession.shared.data(for: request)
@@ -61,7 +47,10 @@ final class UpdateChecker {
                 throw UpdateError.httpError(statusCode: http.statusCode, body: body)
             }
 
-            let release = try JSONDecoder().decode(GitHubRelease.self, from: data)
+            guard let release = parseAtomFeed(data: data) else {
+                throw UpdateError.invalidFeed
+            }
+
             let tag = release.tagName
             let remote = tag.hasPrefix("v") ? String(tag.dropFirst()) : tag
             updateAvailable = isRemoteNewer(remote: remote, local: currentVersion)
@@ -73,6 +62,26 @@ final class UpdateChecker {
         isChecking = false
     }
 
+    private func parseAtomFeed(data: Data) -> GitHubRelease? {
+        guard let doc = try? XMLDocument(data: data),
+              let root = doc.rootElement() else { return nil }
+
+        guard let firstEntry = root.elements(forName: "entry").first,
+              let tagName = firstEntry.elements(forName: "title").first?.stringValue,
+              !tagName.isEmpty else { return nil }
+
+        var htmlUrl = ""
+        for link in firstEntry.elements(forName: "link") {
+            if link.attribute(forName: "rel")?.stringValue == "alternate",
+               let href = link.attribute(forName: "href")?.stringValue {
+                htmlUrl = href
+                break
+            }
+        }
+
+        return GitHubRelease(tagName: tagName, htmlUrl: htmlUrl)
+    }
+
     func downloadAndInstall() async throws {
         guard !isUpdating else { return }
         isUpdating = true
@@ -81,18 +90,15 @@ final class UpdateChecker {
         do {
             guard let release = latestRelease else { return }
 
-            let dmgAsset = release.assets.first { $0.name.hasSuffix(".dmg") }
-            guard let asset = dmgAsset else {
-                throw UpdateError.dmgNotFound
-            }
+            let downloadURL = URL(string: "https://github.com/\(repo)/releases/download/\(release.tagName)/ZenMuxMonitor-\(release.tagName).dmg")!
 
             let tmpDir = FileManager.default.temporaryDirectory.appendingPathComponent("ZenmuxMonitor_Update")
             try? FileManager.default.removeItem(at: tmpDir)
             try FileManager.default.createDirectory(at: tmpDir, withIntermediateDirectories: true)
 
-            let dmgPath = tmpDir.appendingPathComponent(asset.name)
+            let dmgPath = tmpDir.appendingPathComponent("ZenMuxMonitor-\(release.tagName).dmg")
 
-            let (tmpURL, _) = try await URLSession.shared.download(from: asset.browserDownloadUrl)
+            let (tmpURL, _) = try await URLSession.shared.download(from: downloadURL)
             try FileManager.default.moveItem(at: tmpURL, to: dmgPath)
 
             try mountAndReplace(dmgPath: dmgPath, mountPoint: tmpDir.appendingPathComponent("mount"))
@@ -172,7 +178,7 @@ final class UpdateChecker {
 enum UpdateError: LocalizedError {
     case networkError
     case httpError(statusCode: Int, body: String)
-    case dmgNotFound
+    case invalidFeed
     case mountFailed
     case appNotFoundInDmg
 
@@ -182,7 +188,7 @@ enum UpdateError: LocalizedError {
         case .httpError(let code, let body):
             let detail = body.isEmpty ? "HTTP \(code)" : "HTTP \(code): \(body.prefix(200))"
             return "\(L("update.error.network")) (\(detail))"
-        case .dmgNotFound: return L("update.error.dmg_not_found")
+        case .invalidFeed: return L("update.error.feed")
         case .mountFailed: return L("update.error.mount_failed")
         case .appNotFoundInDmg: return L("update.error.app_not_found")
         }

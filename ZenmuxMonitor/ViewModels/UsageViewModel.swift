@@ -1,5 +1,4 @@
 import Foundation
-import IOKit.pwr_mgt
 import Observation
 import ServiceManagement
 
@@ -17,12 +16,13 @@ final class UsageViewModel: @unchecked Sendable {
     private let client = ZenmuxAPIClient()
     private var refreshTimer: Timer?
     private var autoRefreshStarted = false
-    private var sleepAssertionID: IOPMAssertionID = 0
+    private let sleepPrevention = SleepPreventionManager()
 
     private static let preventSleepKey = "preventSleep"
+    private static let refreshIntervalKey = "refreshInterval"
 
     private var _refreshInterval: TimeInterval = {
-        let stored = UserDefaults.standard.double(forKey: "refreshInterval")
+        let stored = UserDefaults.standard.double(forKey: UsageViewModel.refreshIntervalKey)
         return stored > 0 ? stored : 300
     }()
 
@@ -30,7 +30,7 @@ final class UsageViewModel: @unchecked Sendable {
         get { _refreshInterval }
         set {
             _refreshInterval = newValue
-            UserDefaults.standard.set(newValue, forKey: "refreshInterval")
+            UserDefaults.standard.set(newValue, forKey: Self.refreshIntervalKey)
         }
     }
 
@@ -39,7 +39,7 @@ final class UsageViewModel: @unchecked Sendable {
         return !key.isEmpty
     }
 
-    private var _preventSleep = UserDefaults.standard.bool(forKey: "preventSleep")
+    private var _preventSleep = UserDefaults.standard.bool(forKey: UsageViewModel.preventSleepKey)
     private var _launchAtLogin = SMAppService.mainApp.status == .enabled
 
     var preventSleep: Bool {
@@ -47,7 +47,7 @@ final class UsageViewModel: @unchecked Sendable {
         set {
             _preventSleep = newValue
             UserDefaults.standard.set(newValue, forKey: Self.preventSleepKey)
-            if newValue { startSleepPrevention() } else { stopSleepPrevention() }
+            if newValue { sleepPrevention.start() } else { sleepPrevention.stop() }
         }
     }
 
@@ -70,7 +70,7 @@ final class UsageViewModel: @unchecked Sendable {
 
     init() {
         if _preventSleep {
-            startSleepPrevention()
+            sleepPrevention.start()
         }
     }
 
@@ -114,26 +114,6 @@ final class UsageViewModel: @unchecked Sendable {
         Task {
             await refresh()
         }
-    }
-
-    func startSleepPrevention() {
-        guard sleepAssertionID == 0 else { return }
-        let reason = "Preventing sleep for remote access" as CFString
-        let result = IOPMAssertionCreateWithName(
-            kIOPMAssertionTypePreventUserIdleSystemSleep as CFString,
-            IOPMAssertionLevel(kIOPMAssertionLevelOn),
-            reason,
-            &sleepAssertionID
-        )
-        if result != kIOReturnSuccess {
-            sleepAssertionID = 0
-        }
-    }
-
-    func stopSleepPrevention() {
-        guard sleepAssertionID != 0 else { return }
-        IOPMAssertionRelease(sleepAssertionID)
-        sleepAssertionID = 0
     }
 
     func onPanelAppear() {

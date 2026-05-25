@@ -75,6 +75,6 @@
 "update.updating" = "更新中…";
 "update.up_to_date" = "已是最新版本";
 "update.error.network" = "检查更新失败";
-"update.error.dmg_not_found" = "未找到下载文件";
+"update.error.feed" = "无法读取发布信息";
 "update.error.mount_failed" = "无法挂载 DMG";
 "update.error.app_not_found" = "DMG 中未找到应用";

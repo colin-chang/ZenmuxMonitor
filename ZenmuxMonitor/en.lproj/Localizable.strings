@@ -75,6 +75,6 @@
 "update.updating" = "Updating…";
 "update.up_to_date" = "You're up to date";
 "update.error.network" = "Failed to check for updates";
-"update.error.dmg_not_found" = "Download file not found";
+"update.error.feed" = "Failed to read release information";
 "update.error.mount_failed" = "Failed to mount DMG";
 "update.error.app_not_found" = "App not found in DMG";
