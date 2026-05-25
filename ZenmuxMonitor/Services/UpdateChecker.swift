@@ -1,19 +1,14 @@
 import AppKit
 import Foundation
 
-struct GitHubRelease: Decodable {
+struct GitHubRelease {
     let tagName: String
     let htmlUrl: String
-
-    enum CodingKeys: String, CodingKey {
-        case tagName = "tag_name"
-        case htmlUrl = "html_url"
-    }
 }
 
 @MainActor
 @Observable
-final class UpdateChecker {
+final class UpdateChecker: @unchecked Sendable {
     var isChecking = false
     var isUpdating = false
     var latestRelease: GitHubRelease?
